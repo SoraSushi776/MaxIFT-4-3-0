@@ -53,9 +53,9 @@ namespace DancingLineFanmade.Level
             }
         }
 
-        internal void Trigger(Vector3 offset, Vector3 rotation, Vector3 scale, float fov, float duration, Ease ease, RotateMode mode, UnityEvent callback)
+        internal void Trigger(bool addOffset, Vector3 offset, Vector3 rotation, Vector3 scale, float fov, float duration, Ease ease, RotateMode mode, UnityEvent callback)
         {
-            SetOffset(offset, duration, ease);
+            SetOffset(addOffset, offset, duration, ease);
             SetRotation(rotation, duration, mode, ease);
             SetScale(scale, duration, ease);
             SetFov(fov, duration, ease);
@@ -71,14 +71,15 @@ namespace DancingLineFanmade.Level
             fov?.Kill();
         }
 
-        private void SetOffset(Vector3 offset, float duration, Ease ease = Ease.InOutSine)
+        private void SetOffset(bool addOffset, Vector3 offset, float duration, Ease ease = Ease.InOutSine)
         {
             if (this.offset != null)
             {
                 this.offset.Kill();
                 this.offset = null;
             }
-            this.offset = rotator.DOLocalMove(offset, duration).SetEase(ease);
+            if (addOffset) this.offset = rotator.DOLocalMove(rotator.transform.localPosition + offset, duration).SetEase(ease);
+            else this.offset = rotator.DOLocalMove(offset, duration).SetEase(ease);
         }
 
         private void SetRotation(Vector3 rotation, float duration, RotateMode mode, Ease ease = Ease.InOutSine)

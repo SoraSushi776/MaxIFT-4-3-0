@@ -11,6 +11,7 @@ namespace DancingLineFanmade.Trigger
         private CameraFollower follower;
 
         [SerializeField] private UnityEvent onFinished = new UnityEvent();
+        [SerializeField] private bool addOffset = false;
         [SerializeField] private Vector3 offset = Vector3.zero;
         [SerializeField] private Vector3 rotation = new Vector3(54f, 45f, 0f);
         [SerializeField] private Vector3 scale = Vector3.one;
@@ -31,7 +32,7 @@ namespace DancingLineFanmade.Trigger
             if (other.CompareTag("Player") && canBeTriggered)
             {
                 follower.follow = follow;
-                follower.Trigger(offset, rotation, scale, fieldOfView, duration, ease, mode, onFinished);
+                follower.Trigger(addOffset, offset, rotation, scale, fieldOfView, duration, ease, mode, onFinished);
             }
         }
 
@@ -40,7 +41,7 @@ namespace DancingLineFanmade.Trigger
             if (!canBeTriggered)
             {
                 follower.follow = follow;
-                follower.Trigger(offset, rotation, scale, fieldOfView, duration, ease, mode, onFinished);
+                follower.Trigger(addOffset, offset, rotation, scale, fieldOfView, duration, ease, mode, onFinished);
             }
         }
     }
