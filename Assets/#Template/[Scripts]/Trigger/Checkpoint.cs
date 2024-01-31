@@ -74,6 +74,9 @@ namespace DancingLineFanmade.Trigger
         {
             frame.Rotate(Vector3.up, Time.deltaTime * -45f);
             core.Rotate(Vector3.up, Time.deltaTime * 45f);
+            
+            float nowY = Mathf.Sin(Time.time * 2f) * 0.02f;
+            rotator.localPosition = new Vector3(rotator.localPosition.x, rotator.localPosition.y + nowY, rotator.localPosition.z);
         }
 
         internal void EnterTrigger()
@@ -113,7 +116,6 @@ namespace DancingLineFanmade.Trigger
                     LevelManager.revivePlayer.Invoke();
                     LevelManager.CaculateAvailableCrowns(true,this);
                     LevelManager.DestroyRemain();
-                    core.gameObject.SetActive(false);
                     Player.Rigidbody.isKinematic = true;
                 },
                 () =>
