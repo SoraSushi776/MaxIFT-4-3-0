@@ -9717,6 +9717,7 @@ GameObject:
   - component: {fileID: 7624165497488238419}
   - component: {fileID: 7624165497488238429}
   - component: {fileID: 7781688429451391512}
+  - component: {fileID: 1633153609440173049}
   m_Layer: 0
   m_Name: CrownTrigger
   m_TagString: Untagged
@@ -9811,6 +9812,21 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   revivePosition: {fileID: 4661079442478432662}
+--- !u!114 &1633153609440173049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7624165497488238431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2093b03e2f17307449352ca711b25ce8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 8300000, guid: 160ad9ddd1ed4ff4bb79ce2b8f406574, type: 3}
+  volume: 1
+  triggeredByTrigger: 1
 --- !u!1 &7624165497753955748
 GameObject:
   m_ObjectHideFlags: 0
