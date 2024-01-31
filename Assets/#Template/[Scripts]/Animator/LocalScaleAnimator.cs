@@ -13,7 +13,6 @@ namespace DancingLineFanmade.Animated
             switch (transformType)
             {
                 case TransformType.New: finalTransform = scale; break;
-                case TransformType.Add: finalTransform = originalTransform + scale; break;
             }
             InitTransform(AnimatorType.Scale);
             if (triggeredByTime) InitTime();
@@ -26,6 +25,10 @@ namespace DancingLineFanmade.Animated
 
         public void Trigger()
         {
+            switch (transformType)
+            {
+                case TransformType.Add: finalTransform = transform.localScale + scale; break;
+            }
             TriggerAnimator(AnimatorType.Scale);
             if (!dontRevive) LevelManager.revivePlayer += ResetData;
         }

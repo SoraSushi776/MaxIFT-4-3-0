@@ -10,12 +10,11 @@ namespace DancingLineFanmade.Animated
 
         private void Start()
         {
+            InitTransform(AnimatorType.Position);
             switch (transformType)
             {
                 case TransformType.New: finalTransform = position; break;
-                case TransformType.Add: finalTransform = originalTransform + position; break;
             }
-            InitTransform(AnimatorType.Position);
             if (triggeredByTime) InitTime();
         }
 
@@ -26,6 +25,10 @@ namespace DancingLineFanmade.Animated
 
         public void Trigger()
         {
+            switch (transformType)
+            {
+                case TransformType.Add: finalTransform = transform.localPosition + position; break;
+            }
             TriggerAnimator(AnimatorType.Position);
             if (!dontRevive) LevelManager.revivePlayer += ResetData;
         }

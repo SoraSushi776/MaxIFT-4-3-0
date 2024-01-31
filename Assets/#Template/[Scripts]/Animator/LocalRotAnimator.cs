@@ -15,7 +15,6 @@ namespace DancingLineFanmade.Animated
             switch (transformType)
             {
                 case TransformType.New: finalTransform = rotation; break;
-                case TransformType.Add: finalTransform = originalTransform + rotation; break;
             }
             InitTransform(AnimatorType.Rotation);
             if (triggeredByTime) InitTime();
@@ -28,6 +27,10 @@ namespace DancingLineFanmade.Animated
 
         public void Trigger()
         {
+            switch (transformType)
+            {
+                case TransformType.Add: finalTransform = transform.localEulerAngles + rotation; break;
+            }
             TriggerAnimator(AnimatorType.Rotation, rotateMode);
             if (!dontRevive) LevelManager.revivePlayer += ResetData;
         }
