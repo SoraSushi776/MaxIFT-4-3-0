@@ -1,3 +1,4 @@
+using System;
 using DancingLineFanmade.Guidance;
 using DancingLineFanmade.Level;
 using UnityEngine;
@@ -32,8 +33,17 @@ namespace DancingLineFanmade.Auto
                     obj.transform.parent = holder;
                 }
             }
+
+            holder.transform.parent = controller.boxHolder;
             SetHolder(false);
         }
+
+        /*
+        private void Update()
+        {
+            if (GameObject.Find("GuidanceBoxHolder")) holder.transform.localPosition = GameObject.Find("GuidanceBoxHolder").transform.localPosition;
+        }
+        */
 
         public void SetHolder(bool active)
         {

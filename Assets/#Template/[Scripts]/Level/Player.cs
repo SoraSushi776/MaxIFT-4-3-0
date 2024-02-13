@@ -64,7 +64,7 @@ namespace DancingLineFanmade.Level
         private StartPage startPage;
         private bool debug = true;
         private bool loading = false;
-        
+
         [HideInInspector] public Object currentCheckpoint;
         [HideInInspector] public Crown lastCrown;
 
@@ -201,7 +201,7 @@ namespace DancingLineFanmade.Level
                                 startPage.Hide();
                                 startPage = null;
                             }
-                            Cursor.visible = false;
+                            if (!Application.isEditor) Cursor.visible = false;
                         }
                         break;
                     case GameStatus.Playing:

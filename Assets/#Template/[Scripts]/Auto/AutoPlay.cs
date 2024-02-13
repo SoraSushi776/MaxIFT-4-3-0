@@ -20,11 +20,17 @@ namespace DancingLineFanmade.Auto
         {
             selfTransform = transform;
             playerTransform = Player.Instance.transform;
+
+            // 设置45°旋转
+            transform.localEulerAngles = new Vector3(0, -45, 0);
+
+            // 设置触发器大小
+            transform.localScale = new Vector3(0.1f, 3, 10);
         }
 
         private void OnTriggerStay(Collider other)
         {
-            if (other.CompareTag("Player") && Distance <= triggerDistance && !triggered)
+            if (other.CompareTag("Player") && !triggered)
             {
                 triggered = true;
                 Player.Instance.Turn();
