@@ -242,8 +242,24 @@ namespace DancingLineFanmade.Level
         {
             if (collision.collider.CompareTag("Obstacle") && !noDeath && LevelManager.GameState == GameStatus.Playing)
             {
-                if (Checkpoints.Count <= 0 && Crowns.Count <= 0) LevelManager.PlayerDeath(this, DieReason.Hit, cubesPrefab, collision, false);
-                else LevelManager.PlayerDeath(this, DieReason.Hit, cubesPrefab, collision, true);
+                if (Checkpoints.Count <= 0 && Crowns.Count <= 0)
+                { 
+                    LevelManager.PlayerDeath(this, DieReason.Hit, cubesPrefab, collision, false); 
+                    Debug.Log("玩家不在任何检查点或皇冠上，直接死亡");
+                }
+                else
+                {
+                    if (Checkpoints.Count > 0)
+                    {
+                        LevelManager.PlayerDeath(this, DieReason.Hit, cubesPrefab, collision, true);
+                        Debug.Log("玩家在检查点上，返回到最近的检查点");
+                    }
+                    else if (Crowns.Count > 0)
+                    {
+                        LevelManager.PlayerDeath(this, DieReason.Hit, cubesPrefab, collision, true);
+                        Debug.Log("玩家在皇冠上，返回到最近的皇冠");
+                    }
+                }
             }
         }
 

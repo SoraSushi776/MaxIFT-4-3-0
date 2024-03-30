@@ -28,6 +28,7 @@ namespace DancingLineFanmade.Trigger
         private bool taken;
         
         private Player player;
+        private bool usedRevive;
         
         [Title("Player")]
         [SerializeField] private Direction direction = Direction.First;
@@ -103,10 +104,9 @@ namespace DancingLineFanmade.Trigger
             taken = true;
             
             player.Crowns.Add(this);
+            player.CrownCount++;
             player.currentCheckpoint = this;
             player.lastCrown = this;
-            
-            LevelManager.CaculateAvailableCrowns(false,this);
 
             if (!manualCamera && CameraFollower.Instance) camera = camera.GetCamera();
             if (!manualFog) fog = fog.GetFog();
@@ -202,8 +202,9 @@ namespace DancingLineFanmade.Trigger
                     ResetScene();
                     LevelManager.revivePlayer.Invoke();
                     LevelManager.DestroyRemain();
-                    LevelManager.CaculateAvailableCrowns(true,this);
                     Player.Rigidbody.isKinematic = true;
+                    if(!usedRevive) Player.Instance.CrownCount--;
+                    usedRevive = true;
                 },
                 () =>
                 {

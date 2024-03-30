@@ -139,34 +139,6 @@ namespace DancingLineFanmade.Level
             }
         }
 
-        public static void CaculateAvailableCrowns(bool isRevive, Object currentCheckPoint)
-        {
-            List<Crown> NowCrowns = Player.Instance.Crowns;
-
-            if (isRevive)
-            {
-                for (int i = 0; i < NowCrowns.Count; i++)
-                {
-                    if (currentCheckPoint.GetComponent<Crown>())
-                    {
-                        if (NowCrowns[i] == currentCheckPoint.GetComponent<Crown>())
-                        {
-                            Player.Instance.Crowns.Remove(NowCrowns[i]);
-                        }
-                    }
-                    else if (currentCheckPoint.GetComponent<Checkpoint>())
-                    {
-                        if (NowCrowns[i] == Player.Instance.lastCrown)
-                        {
-                            Player.Instance.Crowns.Remove(NowCrowns[i]);
-                        }
-                    }
-                }
-            }
-            
-            Player.Instance.CrownCount = Player.Instance.Crowns.Count;
-        }
-
         public static void InitPlayerPosition(Player player, Vector3 position, bool changeDirection, Direction direction = Direction.First)
         {
             PlayerPosition = position;

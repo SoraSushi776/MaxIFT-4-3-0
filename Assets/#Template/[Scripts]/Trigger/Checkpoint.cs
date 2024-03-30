@@ -18,6 +18,7 @@ namespace DancingLineFanmade.Trigger
         private Transform frame;
         private Transform core;
         private Transform revivePosition;
+        private bool usedRevive;
 
         [Title("Player")]
         [SerializeField] private Direction direction = Direction.First;
@@ -75,7 +76,7 @@ namespace DancingLineFanmade.Trigger
             frame.Rotate(Vector3.up, Time.deltaTime * -45f);
             core.Rotate(Vector3.up, Time.deltaTime * 45f);
 
-            float nowY = Mathf.Sin(Time.time * 2f) * 0.01f;
+            float nowY = Mathf.Sin(Time.time * 2f) * 0.005f;
             rotator.localPosition = new Vector3(rotator.localPosition.x, rotator.localPosition.y + nowY, rotator.localPosition.z);
         }
 
@@ -83,7 +84,6 @@ namespace DancingLineFanmade.Trigger
         {
             player.Checkpoints.Add(this);
             player.currentCheckpoint = this;
-            LevelManager.CaculateAvailableCrowns(false, this);
             rotator.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack);
 
             if (!manualCamera && CameraFollower.Instance) camera = camera.GetCamera();
@@ -114,9 +114,10 @@ namespace DancingLineFanmade.Trigger
                 {
                     ResetScene();
                     LevelManager.revivePlayer.Invoke();
-                    LevelManager.CaculateAvailableCrowns(true, this);
                     LevelManager.DestroyRemain();
                     Player.Rigidbody.isKinematic = true;
+                    if (!usedRevive) Player.Instance.CrownCount--;
+                    usedRevive = true;
                 },
                 () =>
                 {
