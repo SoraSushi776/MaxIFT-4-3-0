@@ -9810,6 +9810,9 @@ MonoBehaviour:
   onRevive:
     m_PersistentCalls:
       m_Calls: []
+  AutoRecord: 1
+  GameTime: 0
+  playerSpeed: 0
   revivePosition: {fileID: 4661079442478432662}
 --- !u!1 &7624165497753955748
 GameObject:

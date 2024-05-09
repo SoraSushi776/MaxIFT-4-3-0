@@ -1,4 +1,4 @@
-using DancingLineFanmade.Level;
+﻿using DancingLineFanmade.Level;
 using DancingLineFanmade.UI;
 using DG.Tweening;
 using Sirenix.OdinInspector;
@@ -14,7 +14,7 @@ namespace DancingLineFanmade.Trigger
     {
         private Player player;
 
-        private Transform rotator;
+        public Transform rotator;
         private Transform frame;
         private Transform core;
         private Transform revivePosition;
@@ -45,9 +45,12 @@ namespace DancingLineFanmade.Trigger
         [Title("Event")]
         [SerializeField] private UnityEvent onRevive = new UnityEvent();
 
-        private float trackTime;
+        [Space(30.0f), SerializeField] private bool AutoRecord = false;
+        [SerializeField, HideIf(nameof(AutoRecord))]
+        private float GameTime;
         private int trackProgress;
-        private int playerSpeed;
+        [SerializeField, HideIf(nameof(AutoRecord))]
+	    private int playerSpeed;
         private Vector3 sceneGravity;
         private Vector3 playerFirstDirection;
         private Vector3 playerSecondDirection;
@@ -60,7 +63,6 @@ namespace DancingLineFanmade.Trigger
         {
             player = Player.Instance;
 
-            rotator = transform.Find("Rotator");
             frame = rotator.Find("Frame");
             core = rotator.Find("Core");
             revivePosition = transform.Find("RevivePosition");
@@ -93,12 +95,17 @@ namespace DancingLineFanmade.Trigger
             foreach (SingleColor s in materialColorsAuto) s.GetColor();
             foreach (SingleImage s in imageColorsAuto) s.GetColor();
 
-            trackTime = AudioManager.Time;
-            trackProgress = player.SoundTrackProgress;
+            if (AutoRecord)
+            {
+                GameTime = AudioManager.Time;
+                playerSpeed = player.Speed; 
+            }
+
             playerSpeed = player.Speed;
-            sceneGravity = Physics.gravity;
             playerFirstDirection = player.firstDirection;
             playerSecondDirection = player.secondDirection;
+            trackProgress = player.SoundTrackProgress;
+            sceneGravity = Physics.gravity;
 
             foreach (SetActive s in actives) if (!s.activeOnAwake) s.AddRevives();
             foreach (PlayAnimator a in animators) foreach (SingleAnimator s in a.animators) if (!s.dontRevive) s.GetState();
@@ -138,7 +145,7 @@ namespace DancingLineFanmade.Trigger
             foreach (SingleImage s in imageColorsManual) s.SetColor();
 
             AudioManager.Stop();
-            AudioManager.Time = trackTime;
+            AudioManager.Time = GameTime;
             AudioManager.Volume = 1f;
             player.SoundTrackProgress = trackProgress;
             player.ClearPool();

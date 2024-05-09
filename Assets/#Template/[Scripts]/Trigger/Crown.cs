@@ -1,7 +1,8 @@
-using DancingLineFanmade.Level;
+﻿using DancingLineFanmade.Level;
 using DancingLineFanmade.UI;
 using DG.Tweening;
 using Sirenix.OdinInspector;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -55,9 +56,12 @@ namespace DancingLineFanmade.Trigger
         [Title("Event")]
         [SerializeField] private UnityEvent onRevive = new UnityEvent();
 
-        private float trackTime;
+        [Space(30.0f), SerializeField] private bool AutoRecord = false;
+        [SerializeField, HideIf(nameof(AutoRecord))]
+        private float GameTime;
         private int trackProgress;
-        private int playerSpeed;
+        [SerializeField, HideIf(nameof(AutoRecord))]
+	    private int playerSpeed;
         private Vector3 sceneGravity;
         private Vector3 playerFirstDirection;
         private Vector3 playerSecondDirection;
@@ -115,8 +119,12 @@ namespace DancingLineFanmade.Trigger
             foreach (SingleColor s in materialColorsAuto) s.GetColor();
             foreach (SingleImage s in imageColorsAuto) s.GetColor();
 
-            trackTime = AudioManager.Time;
-            trackProgress = player.SoundTrackProgress;
+            if (AutoRecord)
+            {
+                GameTime = AudioManager.Time;
+                playerSpeed = player.Speed;
+            }
+
             playerSpeed = player.Speed;
             sceneGravity = Physics.gravity;
             playerFirstDirection = player.firstDirection;
@@ -226,7 +234,7 @@ namespace DancingLineFanmade.Trigger
             foreach (SingleImage s in imageColorsManual) s.SetColor();
 
             AudioManager.Stop();
-            AudioManager.Time = trackTime;
+            AudioManager.Time = GameTime;
             AudioManager.Volume = 1f;
             player.SoundTrackProgress = trackProgress;
             player.ClearPool();
