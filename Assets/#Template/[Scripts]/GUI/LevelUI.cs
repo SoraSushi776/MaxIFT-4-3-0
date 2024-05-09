@@ -38,6 +38,8 @@ namespace DancingLineFanmade.UI
 
         private Player player;
         private float progress;
+        
+        [SerializeField] private AudioClip panelSound;
 
         private void Awake()
         {
@@ -72,6 +74,7 @@ namespace DancingLineFanmade.UI
         internal void ShowPage(bool normal, float percent, int blockCount = 0, int crownCount = 0)
         {
             Cursor.visible = true;
+            Instantiate(new GameObject()).AddComponent<AudioSource>().PlayOneShot(panelSound);
             if (normal)
             {
                 moveUpPart.DOAnchorPos(Vector2.zero, 0.4f).SetEase(Ease.OutSine);
@@ -111,7 +114,6 @@ namespace DancingLineFanmade.UI
         {
             foreach (Button b in buttonsRevive) b.interactable = false;
             if(player.currentCheckpoint.GetComponent<Checkpoint>()) player.currentCheckpoint.GetComponent<Checkpoint>().Revival();
-            else if (player.currentCheckpoint.GetComponent<Crown>()) player.currentCheckpoint.GetComponent<Crown>().Revival();
         }
 
         public void CancelRevive()

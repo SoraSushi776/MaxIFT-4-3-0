@@ -15,8 +15,8 @@ namespace DancingLineFanmade.Trigger
         private Player player;
 
         public Transform rotator;
-        private Transform frame;
-        private Transform core;
+        private Transform gem;
+        private Transform checkPointText;
         private Transform revivePosition;
         private bool usedRevive;
 
@@ -62,9 +62,9 @@ namespace DancingLineFanmade.Trigger
         private void Start()
         {
             player = Player.Instance;
-
-            frame = rotator.Find("Frame");
-            core = rotator.Find("Core");
+            rotator = transform.Find("Rotator");
+            checkPointText = transform.transform.Find("CheckPointText");
+            gem = rotator.transform.Find("Gem");
             revivePosition = transform.Find("RevivePosition");
             revivePosition.gameObject.SetActive(false);
 
@@ -75,8 +75,7 @@ namespace DancingLineFanmade.Trigger
 
         private void Update()
         {
-            frame.Rotate(Vector3.up, Time.deltaTime * -45f);
-            core.Rotate(Vector3.up, Time.deltaTime * 45f);
+            rotator.Rotate(Vector3.up, 90f * Time.deltaTime);
 
             float nowY = Mathf.Sin(Time.time * 2f) * 0.005f;
             rotator.localPosition = new Vector3(rotator.localPosition.x, rotator.localPosition.y + nowY, rotator.localPosition.z);
@@ -112,6 +111,9 @@ namespace DancingLineFanmade.Trigger
             foreach (FakePlayer f in fakes) f.GetData();
             player.GetAnimatorProgresses();
             player.GetTimelineProgresses();
+            
+            gem.GetComponent<Gem>().PickUp(false);
+            checkPointText.DOLocalMoveZ(100f, 1.5f).SetEase(Ease.OutBack);
         }
 
         internal void Revival()

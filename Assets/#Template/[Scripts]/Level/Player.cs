@@ -51,7 +51,6 @@ namespace DancingLineFanmade.Level
         internal int CrownCount { get; set; }
         internal UnityEvent OnTurn { get; private set; }
         internal List<Checkpoint> Checkpoints { get; set; }
-        internal List<Crown> Crowns { get; set; }
         internal bool disallowInput { get; set; }
 
         private BoxCollider characterCollider;
@@ -64,9 +63,9 @@ namespace DancingLineFanmade.Level
         private StartPage startPage;
         private bool debug = true;
         private bool loading = false;
+        [SerializeField] private AudioClip tapSound;
 
         [HideInInspector] public Object currentCheckpoint;
-        [HideInInspector] public Crown lastCrown;
 
         private float TailDistance
         {
@@ -115,7 +114,6 @@ namespace DancingLineFanmade.Level
             Rigidbody = GetComponent<Rigidbody>();
             loading = false;
             Checkpoints = new List<Checkpoint>();
-            Crowns = new List<Crown>();
             OnTurn = new UnityEvent();
             selfTransform = transform;
             tailHolder = new GameObject("PlayerTailHolder").transform;
@@ -242,7 +240,7 @@ namespace DancingLineFanmade.Level
         {
             if (collision.collider.CompareTag("Obstacle") && !noDeath && LevelManager.GameState == GameStatus.Playing)
             {
-                if (Checkpoints.Count <= 0 && Crowns.Count <= 0)
+                if (Checkpoints.Count <= 0)
                 { 
                     LevelManager.PlayerDeath(this, DieReason.Hit, cubesPrefab, collision, false); 
                     Debug.Log("玩家不在任何检查点或皇冠上，直接死亡");
@@ -254,11 +252,6 @@ namespace DancingLineFanmade.Level
                         LevelManager.PlayerDeath(this, DieReason.Hit, cubesPrefab, collision, true);
                         Debug.Log("玩家在检查点上，返回到最近的检查点");
                     }
-                    else if (Crowns.Count > 0)
-                    {
-                        LevelManager.PlayerDeath(this, DieReason.Hit, cubesPrefab, collision, true);
-                        Debug.Log("玩家在皇冠上，返回到最近的皇冠");
-                    }
                 }
             }
         }
@@ -269,6 +262,7 @@ namespace DancingLineFanmade.Level
             CreateTail();
             OnTurn.Invoke();
             Events?.Invoke(2);
+            Instantiate(new GameObject()).AddComponent<AudioSource>().PlayOneShot(tapSound);
         }
 
         private void CreateTail()

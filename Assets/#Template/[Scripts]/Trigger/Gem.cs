@@ -35,14 +35,19 @@ namespace DancingLineFanmade.Trigger
         {
             if (other.CompareTag("Player") && !got && !fake)
             {
-                got = true;
-                player.Events?.Invoke(6);
-                MeshRenderer.enabled = false;
-                index = player.Checkpoints.Count;
-                if (QualitySettings.GetQualityLevel() > 0) effect = Instantiate(effectPrefab, transform.position, Quaternion.Euler(-90, 0, 0));
-                player.BlockCount++;
-                LevelManager.revivePlayer += ResetData;
+                PickUp(true);
             }
+        }
+
+        public void PickUp(bool add)
+        {
+            got = true;
+            player.Events?.Invoke(6);
+            MeshRenderer.enabled = false;
+            index = player.Checkpoints.Count;
+            if (QualitySettings.GetQualityLevel() > 0) effect = Instantiate(effectPrefab, transform.position, Quaternion.Euler(-90, 0, 0));
+            if (add) player.BlockCount++;
+            if (add) LevelManager.revivePlayer += ResetData;
         }
 
         private void ResetData()

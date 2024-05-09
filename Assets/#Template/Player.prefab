@@ -135,8 +135,10 @@ MonoBehaviour:
   firstDirection: {x: 0, y: 90, z: 0}
   secondDirection: {x: 0, y: 0, z: 0}
   poolSize: 100
-  playOnStartAnimators: []
-  stopOnDieAnimators: []
+  playedAnimators: []
+  playedTimelines: []
   allowTurn: 1
   noDeath: 0
   drawDirection: 0
+  tapSound: {fileID: 8300000, guid: d4101f595f4fe734bb36fbd1199bee3d, type: 3}
+  currentCheckpoint: {fileID: 0}
