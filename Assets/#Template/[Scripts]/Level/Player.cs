@@ -44,8 +44,8 @@ namespace DancingLineFanmade.Level
         public bool noDeath = false;
         public bool drawDirection = false;
 
-        internal int Speed { get; set; }
-        internal AudioSource SoundTrack { get; private set; }
+	    internal int Speed { get; set; }
+        internal AudioSource SoundTrack { get; set; }
         internal int SoundTrackProgress { get; set; }
         internal int BlockCount { get; set; }
         internal int CrownCount { get; set; }
@@ -53,6 +53,7 @@ namespace DancingLineFanmade.Level
         internal List<Checkpoint> Checkpoints { get; set; }
         internal List<Crown> Crowns { get; set; }
         internal bool disallowInput { get; set; }
+        internal StartPage startPage;
 
         private BoxCollider characterCollider;
         private Vector3 tailPosition;
@@ -61,7 +62,6 @@ namespace DancingLineFanmade.Level
         private ObjectPool<Transform> tailPool = new ObjectPool<Transform>();
         private List<float> animatorProgresses = new List<float>();
         private List<double> timelineProgresses = new List<double>();
-        private StartPage startPage;
         private bool debug = true;
         private bool loading = false;
 
@@ -73,7 +73,7 @@ namespace DancingLineFanmade.Level
             get => new Vector2(tailPosition.x - selfTransform.position.x, tailPosition.z - selfTransform.position.z).magnitude;
         }
 
-        private bool previousFrameIsGrounded;
+        public bool previousFrameIsGrounded;
         private float groundedRayDistance = 0.05f;
         private ValueTuple<Vector3, Ray>[] groundedTestRays;
         private RaycastHit[] groundedTestResults = new RaycastHit[1];
@@ -101,7 +101,6 @@ namespace DancingLineFanmade.Level
         {
             get => events ? events : (events = GetComponent<GameEvents>() ? GetComponent<GameEvents>() : null);
         }
-
         private void Awake()
         {
             if (!levelData)
@@ -132,11 +131,18 @@ namespace DancingLineFanmade.Level
             previousFrameIsGrounded = Falling;
 
             foreach (Animator animator in playedAnimators) animator.speed = 0f;
-            foreach (PlayableDirector director in playedTimelines) director.Pause();
 
             LoadingPage.Instance?.Fade(0f, 0.4f);
 
             lastTime = Time.realtimeSinceStartup;
+
+            for (int a = 0; a < playedTimelines.Count; a++)
+            {
+                playedTimelines[a].time = 0f;
+                playedTimelines[a].Pause();
+                playedTimelines[a].Evaluate();
+            }
+
         }
 
         private void Start()
@@ -160,9 +166,6 @@ namespace DancingLineFanmade.Level
             Instantiate(uiPrefab);
             startPage = Instantiate(startPrefab).GetComponent<StartPage>();
             if (!LoadingPage.Instance) DontDestroyOnLoad(Instantiate(loadingPrefab));
-
-            Events?.Invoke(0);
-            Cursor.visible = true;
         }
 
         private void Update()
@@ -243,21 +246,18 @@ namespace DancingLineFanmade.Level
             if (collision.collider.CompareTag("Obstacle") && !noDeath && LevelManager.GameState == GameStatus.Playing)
             {
                 if (Checkpoints.Count <= 0 && Crowns.Count <= 0)
-                { 
-                    LevelManager.PlayerDeath(this, DieReason.Hit, cubesPrefab, collision, false); 
-                    Debug.Log("玩家不在任何检查点或皇冠上，直接死亡");
+                {
+                    LevelManager.PlayerDeath(this, DieReason.Hit, cubesPrefab, collision);
                 }
                 else
                 {
                     if (Checkpoints.Count > 0)
                     {
                         LevelManager.PlayerDeath(this, DieReason.Hit, cubesPrefab, collision, true);
-                        Debug.Log("玩家在检查点上，返回到最近的检查点");
                     }
                     else if (Crowns.Count > 0)
                     {
                         LevelManager.PlayerDeath(this, DieReason.Hit, cubesPrefab, collision, true);
-                        Debug.Log("玩家在皇冠上，返回到最近的皇冠");
                     }
                 }
             }
@@ -314,9 +314,19 @@ namespace DancingLineFanmade.Level
             foreach (Animator a in playedAnimators) animatorProgresses.Add(a.GetCurrentAnimatorStateInfo(0).normalizedTime);
         }
 
-        internal void SetAnimatorProgresses()
-        {
-            for (int a = 0; a < playedAnimators.Count; a++) playedAnimators[a].Play(playedAnimators[a].GetCurrentAnimatorClipInfo(0)[0].clip.name, 0, animatorProgresses[a]);
+        internal void SetAnimatorProgresses(float progress = 0f)
+        {  
+            for (int a = 0; a < playedAnimators.Count; a++)
+            {
+                if (progress != 0 && a == 0)
+                {
+                    playedAnimators[a].Play(playedAnimators[a].GetCurrentAnimatorStateInfo(0).fullPathHash, 0, progress);
+                }
+                else
+                {
+                    playedAnimators[a].Play(playedAnimators[a].GetCurrentAnimatorStateInfo(0).fullPathHash, 0,animatorProgresses[a]);
+                }
+            }
         }
 
         internal void GetTimelineProgresses()
@@ -325,12 +335,20 @@ namespace DancingLineFanmade.Level
             foreach (PlayableDirector p in playedTimelines) timelineProgresses.Add(p.time);
         }
 
-        internal void SetTimelineProgresses()
+        internal void SetTimelineProgresses(float progress = 0f)
         {
             for (int a = 0; a < playedTimelines.Count; a++)
             {
-                playedTimelines[a].time = timelineProgresses[a];
-                playedTimelines[a].Evaluate();
+                if (progress != 0 && a == 0)
+                {
+                    playedTimelines[a].time = progress;
+                    playedTimelines[a].Evaluate();
+                }
+                else
+                {
+                    playedTimelines[a].time = timelineProgresses[a];
+                    playedTimelines[a].Evaluate();
+                }
             }
         }
 

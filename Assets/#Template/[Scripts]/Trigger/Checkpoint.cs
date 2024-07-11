@@ -158,8 +158,8 @@ namespace DancingLineFanmade.Trigger
             foreach (SetActive s in actives) if (!s.activeOnAwake) s.Revive();
             foreach (PlayAnimator a in animators) foreach (SingleAnimator s in a.animators) if (!s.dontRevive && s.played) s.SetState();
             foreach (FakePlayer f in fakes) if (f.playing) f.ResetState();
-            player.SetAnimatorProgresses();
-            player.SetTimelineProgresses();
+            player.SetAnimatorProgresses(GameTime);
+            player.SetTimelineProgresses(GameTime);
 
             onRevive.Invoke();
         }

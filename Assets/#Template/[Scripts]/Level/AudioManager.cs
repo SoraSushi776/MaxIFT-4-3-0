@@ -14,13 +14,20 @@ namespace DancingLineFanmade.Level
             Object.Destroy(audioSource.gameObject, clip.length);
         }
 
-        public static AudioSource PlayTrack(AudioClip clip, float volume)
+        public static AudioSource PlayTrack(AudioClip clip, float volume, bool playImmediately = true)
         {
             AudioSource audioSource = new GameObject(clip.name).AddComponent<AudioSource>();
             audioSource.clip = clip;
             audioSource.volume = volume;
             audioSource.Play();
+            if (!playImmediately) audioSource.Stop();
             return audioSource;
+        }
+
+        public static void PlayStartTime(float time)
+        {
+            Player.Instance.SoundTrack.time = time;
+            Player.Instance.SoundTrack.Play();
         }
 
         public static float Time

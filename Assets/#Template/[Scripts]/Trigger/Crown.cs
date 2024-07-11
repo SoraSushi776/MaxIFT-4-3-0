@@ -27,45 +27,62 @@ namespace DancingLineFanmade.Trigger
         private readonly List<Tween> auraTweens = new();
 
         private bool taken;
-        
+
         private Player player;
         private bool usedRevive;
-        
-        [Title("Player")]
-        [SerializeField] private Direction direction = Direction.First;
 
-        [SerializeField, HorizontalGroup("Camera")] private new CameraSettings camera = new CameraSettings();
-        [SerializeField, HorizontalGroup("Camera"), HideLabel] private bool manualCamera = false;
+        [Title("Player")] [SerializeField] private Direction direction = Direction.First;
 
-        [SerializeField, HorizontalGroup("Fog")] private FogSettings fog = new FogSettings();
-        [SerializeField, HorizontalGroup("Fog"), HideLabel] private bool manualFog = false;
+        [SerializeField, HorizontalGroup("Camera")]
+        private new CameraSettings camera = new CameraSettings();
 
-        [SerializeField, HorizontalGroup("Light")] private new LightSettings light = new LightSettings();
-        [SerializeField, HorizontalGroup("Light"), HideLabel] private bool manualLight = false;
+        [SerializeField, HorizontalGroup("Camera"), HideLabel]
+        private bool manualCamera = false;
 
-        [SerializeField, HorizontalGroup("Ambient")] private AmbientSettings ambient = new AmbientSettings();
-        [SerializeField, HorizontalGroup("Ambient"), HideLabel] private bool manualAmbient = false;
+        [SerializeField, HorizontalGroup("Fog")]
+        private FogSettings fog = new FogSettings();
 
-        [Title("Colors")]
-        [SerializeField, TableList] private List<SingleColor> materialColorsAuto = new List<SingleColor>();
+        [SerializeField, HorizontalGroup("Fog"), HideLabel]
+        private bool manualFog = false;
+
+        [SerializeField, HorizontalGroup("Light")]
+        private new LightSettings light = new LightSettings();
+
+        [SerializeField, HorizontalGroup("Light"), HideLabel]
+        private bool manualLight = false;
+
+        [SerializeField, HorizontalGroup("Ambient")]
+        private AmbientSettings ambient = new AmbientSettings();
+
+        [SerializeField, HorizontalGroup("Ambient"), HideLabel]
+        private bool manualAmbient = false;
+
+        [Title("Colors")] [SerializeField, TableList]
+        private List<SingleColor> materialColorsAuto = new List<SingleColor>();
+
         [SerializeField, TableList] private List<SingleColor> materialColorsManual = new List<SingleColor>();
 
         [SerializeField, TableList] private List<SingleImage> imageColorsAuto = new List<SingleImage>();
         [SerializeField, TableList] private List<SingleImage> imageColorsManual = new List<SingleImage>();
 
-        [Title("Event")]
-        [SerializeField] private UnityEvent onRevive = new UnityEvent();
+        [Title("Event")] [SerializeField] private UnityEvent onRevive = new UnityEvent();
 
         [Space(30.0f), SerializeField] private bool AutoRecord = false;
+
         [SerializeField, HideIf(nameof(AutoRecord))]
         private float GameTime;
+
         private int trackProgress;
+
         [SerializeField, HideIf(nameof(AutoRecord))]
-	    private int playerSpeed;
+        private int playerSpeed;
+
+        public UnityEvent eventWeNeedInvokeWhenJumpToHere;
+
         private Vector3 sceneGravity;
         private Vector3 playerFirstDirection;
         private Vector3 playerSecondDirection;
-        
+
         public Transform revivePosition;
 
         private List<SetActive> actives = new List<SetActive>();
@@ -99,6 +116,7 @@ namespace DancingLineFanmade.Trigger
                 var main = VARIABLE.main;
                 main.startColor = color;
             }
+
             crownAura.Play();
         }
 
@@ -106,7 +124,7 @@ namespace DancingLineFanmade.Trigger
         {
             if (!other.CompareTag("Player") || taken) return;
             taken = true;
-            
+
             player.Crowns.Add(this);
             player.CrownCount++;
             player.currentCheckpoint = this;
@@ -130,8 +148,13 @@ namespace DancingLineFanmade.Trigger
             playerFirstDirection = player.firstDirection;
             playerSecondDirection = player.secondDirection;
 
-            foreach (SetActive s in actives) if (!s.activeOnAwake) s.AddRevives();
-            foreach (PlayAnimator a in animators) foreach (SingleAnimator s in a.animators) if (!s.dontRevive) s.GetState();
+            foreach (SetActive s in actives)
+                if (!s.activeOnAwake)
+                    s.AddRevives();
+            foreach (PlayAnimator a in animators)
+            foreach (SingleAnimator s in a.animators)
+                if (!s.dontRevive)
+                    s.GetState();
             foreach (FakePlayer f in fakes) f.GetData();
             player.GetAnimatorProgresses();
             player.GetTimelineProgresses();
@@ -201,7 +224,7 @@ namespace DancingLineFanmade.Trigger
             foreach (var VARIABLE in auraTweens) VARIABLE.Kill();
             auraTweens.Clear();
         }
-        
+
         internal void Revival()
         {
             DOTween.Clear();
@@ -211,7 +234,7 @@ namespace DancingLineFanmade.Trigger
                     LevelManager.revivePlayer.Invoke();
                     LevelManager.DestroyRemain();
                     Player.Rigidbody.isKinematic = true;
-                    if(!usedRevive) Player.Instance.CrownCount--;
+                    if (!usedRevive) Player.Instance.CrownCount--;
                     usedRevive = true;
                 },
                 () =>
@@ -244,13 +267,42 @@ namespace DancingLineFanmade.Trigger
             player.firstDirection = playerFirstDirection;
             player.secondDirection = playerSecondDirection;
             LevelManager.InitPlayerPosition(player, revivePosition.position, true, direction);
-            foreach (SetActive s in actives) if (!s.activeOnAwake) s.Revive();
-            foreach (PlayAnimator a in animators) foreach (SingleAnimator s in a.animators) if (!s.dontRevive && s.played) s.SetState();
-            foreach (FakePlayer f in fakes) if (f.playing) f.ResetState();
-            player.SetAnimatorProgresses();
-            player.SetTimelineProgresses();
+            foreach (SetActive s in actives)
+                if (!s.activeOnAwake)
+                    s.Revive();
+            foreach (PlayAnimator a in animators)
+            foreach (SingleAnimator s in a.animators)
+                if (!s.dontRevive && s.played)
+                    s.SetState();
+            foreach (FakePlayer f in fakes)
+                if (f.playing)
+                    f.ResetState();
+            player.SetAnimatorProgresses(GameTime);
+            player.SetTimelineProgresses(GameTime);
 
             onRevive.Invoke();
+        }
+
+        public void JumpToHere()
+        {
+            if (LevelManager.GameState == GameStatus.Waiting)
+            {
+                LevelUI.Instance.HideScreen(fog.fogColor, 0.32f, () =>
+                    {
+                        LevelManager.InitPlayerPosition(player, revivePosition.position, true, direction);
+                        player.SoundTrack = AudioManager.PlayTrack(player.levelData.soundTrack, 1, false);
+                        player.SoundTrack.time = GameTime;
+                        player.SetTimelineProgresses(GameTime);
+                        player.SetAnimatorProgresses(GameTime);
+                        eventWeNeedInvokeWhenJumpToHere.Invoke();
+                        LevelManager.InitPlayerPosition(player, revivePosition.position, true, direction);
+                    },
+                    () =>
+                    {
+                        Player.Rigidbody.isKinematic = false;
+                        player.allowTurn = true;
+                    });
+            }
         }
     }
 }
