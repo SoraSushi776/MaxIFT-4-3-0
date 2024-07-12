@@ -50,7 +50,7 @@ namespace DancingLineFanmade.Trigger
         private float GameTime;
         private int trackProgress;
         [SerializeField, HideIf(nameof(AutoRecord))]
-	    private int playerSpeed;
+	    private float playerSpeed;
         private Vector3 sceneGravity;
         private Vector3 playerFirstDirection;
         private Vector3 playerSecondDirection;

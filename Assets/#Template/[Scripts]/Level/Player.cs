@@ -44,7 +44,7 @@ namespace DancingLineFanmade.Level
         public bool noDeath = false;
         public bool drawDirection = false;
 
-	    internal int Speed { get; set; }
+	    internal float Speed { get; set; }
         internal AudioSource SoundTrack { get; set; }
         internal int SoundTrackProgress { get; set; }
         internal int BlockCount { get; set; }

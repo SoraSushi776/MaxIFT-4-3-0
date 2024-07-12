@@ -75,7 +75,7 @@ namespace DancingLineFanmade.Trigger
         private int trackProgress;
 
         [SerializeField, HideIf(nameof(AutoRecord))]
-        private int playerSpeed;
+        private float playerSpeed;
 
         public UnityEvent eventWeNeedInvokeWhenJumpToHere;
 
