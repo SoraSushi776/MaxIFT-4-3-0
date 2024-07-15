@@ -1,7 +1,11 @@
 {
     "files.exclude": {
-        "**/.DS_Store": true,
         "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
         "**/.gitmodules": true,
         "**/*.booproj": true,
         "**/*.pidb": true,
@@ -51,5 +55,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "MaxIFT-4.2.sln"
+    "dotnet.defaultSolution": "MaxIFT-4.2.sln",
+    "hide-files.files": []
 }
