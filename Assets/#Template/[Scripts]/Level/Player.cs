@@ -57,16 +57,24 @@ namespace DancingLineFanmade.Level
 
         private BoxCollider characterCollider;
         private Vector3 tailPosition;
-        private Transform tail;
         private Transform tailHolder;
         private ObjectPool<Transform> tailPool = new ObjectPool<Transform>();
         private List<float> animatorProgresses = new List<float>();
         private List<double> timelineProgresses = new List<double>();
         private bool debug = true;
         private bool loading = false;
-
+        
+        [HideInInspector] public Transform tail;
+        [HideInInspector] public bool allowCreateTail = true;
         [HideInInspector] public Object currentCheckpoint;
         [HideInInspector] public Crown lastCrown;
+        
+        [HideInInspector] public Transform henshinObject;
+        [HideInInspector] public Vector3 objectOffset;
+        [HideInInspector] public bool showLineTail, showLineBody;
+        [HideInInspector] public float holdTime;
+        [HideInInspector] public bool henShin = false;
+        private bool didCreateTail = false;
 
         private float TailDistance
         {
@@ -237,6 +245,35 @@ namespace DancingLineFanmade.Level
                         Events?.Invoke(4);
                     }
                 }
+                
+                if (henShin)
+                {
+                    didCreateTail = false;
+                    henshinObject.position = Player.Instance.transform.position + objectOffset;
+                    if (!showLineTail)
+                    {
+                        Player.Instance.tail = null;
+                        Player.Instance.allowCreateTail = false;
+                    }
+                    Player.Instance.GetComponent<MeshRenderer>().enabled = showLineBody;
+            
+                    Player.Instance.OnTurn.AddListener(() =>
+                    {
+                        if (!henShin) return;
+                        DOTween.Kill(100);
+                        henshinObject.transform.DORotate(Player.Instance.transform.eulerAngles, 0.3f).SetId(100);
+                    });
+                }
+                else
+                {
+                    if (!didCreateTail)
+                    {
+                        Player.Instance.allowCreateTail = true;
+                        Player.Instance.CreateTail();
+                        Player.Instance.GetComponent<MeshRenderer>().enabled = true;
+                        didCreateTail = true;
+                    }
+                }
             }
             if (LevelManager.GameState == GameStatus.Playing) SoundTrackProgress = SoundTrack ? (int)(AudioManager.Progress * 100) : 0;
         }
@@ -271,8 +308,10 @@ namespace DancingLineFanmade.Level
             Events?.Invoke(2);
         }
 
-        private void CreateTail()
+        public void CreateTail()
         {
+            if (!allowCreateTail) return;
+            
             Quaternion now = Quaternion.Euler(selfTransform.localEulerAngles);
             float offset = tailPrefab.transform.localScale.z * 0.5f;
 
