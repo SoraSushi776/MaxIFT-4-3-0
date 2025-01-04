@@ -174,6 +174,13 @@ namespace DancingLineFanmade.Level
             Instantiate(uiPrefab);
             startPage = Instantiate(startPrefab).GetComponent<StartPage>();
             if (!LoadingPage.Instance) DontDestroyOnLoad(Instantiate(loadingPrefab));
+            
+            Player.Instance.OnTurn.AddListener(() =>
+            {
+                if (!henShin) return;
+                DOTween.Kill(100);
+                henshinObject.transform.DORotate(Player.Instance.transform.eulerAngles, 0.3f).SetId(100);
+            });
         }
 
         private void Update()
@@ -245,37 +252,30 @@ namespace DancingLineFanmade.Level
                         Events?.Invoke(4);
                     }
                 }
-                
-                if (henShin)
-                {
-                    didCreateTail = false;
-                    henshinObject.position = Player.Instance.transform.position + objectOffset;
-                    if (!showLineTail)
-                    {
-                        Player.Instance.tail = null;
-                        Player.Instance.allowCreateTail = false;
-                    }
-                    Player.Instance.GetComponent<MeshRenderer>().enabled = showLineBody;
-            
-                    Player.Instance.OnTurn.AddListener(() =>
-                    {
-                        if (!henShin) return;
-                        DOTween.Kill(100);
-                        henshinObject.transform.DORotate(Player.Instance.transform.eulerAngles, 0.3f).SetId(100);
-                    });
-                }
-                else
-                {
-                    if (!didCreateTail)
-                    {
-                        Player.Instance.allowCreateTail = true;
-                        Player.Instance.CreateTail();
-                        Player.Instance.GetComponent<MeshRenderer>().enabled = true;
-                        didCreateTail = true;
-                    }
-                }
             }
             if (LevelManager.GameState == GameStatus.Playing) SoundTrackProgress = SoundTrack ? (int)(AudioManager.Progress * 100) : 0;
+            
+            if (henShin)
+            {
+                didCreateTail = false;
+                henshinObject.position = Player.Instance.transform.position + objectOffset;
+                if (!showLineTail)
+                {
+                    Player.Instance.tail = null;
+                    Player.Instance.allowCreateTail = false;
+                }
+                Player.Instance.GetComponent<MeshRenderer>().enabled = showLineBody;
+            }
+            else
+            {
+                if (!didCreateTail)
+                {
+                    Player.Instance.allowCreateTail = true;
+                    Player.Instance.CreateTail();
+                    Player.Instance.GetComponent<MeshRenderer>().enabled = true;
+                    didCreateTail = true;
+                }
+            }
         }
 
         private void OnCollisionEnter(Collision collision)
