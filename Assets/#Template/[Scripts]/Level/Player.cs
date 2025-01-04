@@ -284,17 +284,17 @@ namespace DancingLineFanmade.Level
             {
                 if (Checkpoints.Count <= 0 && Crowns.Count <= 0)
                 {
-                    LevelManager.PlayerDeath(this, DieReason.Hit, cubesPrefab, collision);
+                    LevelManager.PlayerDeath(this, DieReason.Hit, !showLineBody ? null : cubesPrefab, collision);
                 }
                 else
                 {
                     if (Checkpoints.Count > 0)
                     {
-                        LevelManager.PlayerDeath(this, DieReason.Hit, cubesPrefab, collision, true);
+                        LevelManager.PlayerDeath(this, DieReason.Hit, !showLineBody ? null : cubesPrefab, collision, true);
                     }
                     else if (Crowns.Count > 0)
                     {
-                        LevelManager.PlayerDeath(this, DieReason.Hit, cubesPrefab, collision, true);
+                        LevelManager.PlayerDeath(this, DieReason.Hit, !showLineBody ? null : cubesPrefab, collision, true);
                     }
                 }
             }
