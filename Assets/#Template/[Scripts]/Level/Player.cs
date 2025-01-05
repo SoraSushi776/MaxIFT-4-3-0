@@ -72,8 +72,8 @@ namespace DancingLineFanmade.Level
         [HideInInspector] public Transform henshinObject;
         [HideInInspector] public Vector3 objectOffset;
         [HideInInspector] public bool showLineTail, showLineBody;
-        [HideInInspector] public float holdTime;
         [HideInInspector] public bool henShin = false;
+        [HideInInspector] public float rotationTime;
         private bool didCreateTail = false;
 
         private float TailDistance
@@ -179,7 +179,7 @@ namespace DancingLineFanmade.Level
             {
                 if (!henShin) return;
                 DOTween.Kill(100);
-                henshinObject.transform.DORotate(Player.Instance.transform.eulerAngles, 0.3f).SetId(100);
+                henshinObject.transform.DORotate(Player.Instance.transform.eulerAngles, rotationTime).SetId(100);
             });
         }
 

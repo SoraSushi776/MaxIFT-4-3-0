@@ -1553,6 +1553,8 @@ MonoBehaviour:
   objectOffset: {x: 0, y: -0.5, z: 0}
   showLineTail: 0
   showLineBody: 1
+  facing: 0
+  animationTime: 0
 --- !u!1001 &2115656160
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1632,6 +1634,8 @@ MonoBehaviour:
   objectOffset: {x: 0, y: -0.5, z: 0}
   showLineTail: 0
   showLineBody: 1
+  facing: 1
+  animationTime: 0
 --- !u!1 &348998649366065844
 GameObject:
   m_ObjectHideFlags: 0
