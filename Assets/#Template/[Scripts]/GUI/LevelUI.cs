@@ -25,6 +25,7 @@ namespace DancingLineFanmade.UI
         [SerializeField] private RectTransform moveDownPart;
         [SerializeField] private List<CanvasGroup> normalAlpha = new List<CanvasGroup>();
         [SerializeField] private List<Image> crownInfill = new List<Image>();
+        [SerializeField] private List<AudioClip> crownSount = new List<AudioClip>();
         [SerializeField] private List<Button> buttons = new List<Button>();
 
         [Title("Revive")]
@@ -82,12 +83,30 @@ namespace DancingLineFanmade.UI
                 percentage.text = ((int)(percent * 100f)).ToString() + "%";
                 block.text = blockCount + "/10";
                 title.text = player.levelData.levelTitle;
-                
-                for (int i = 0; i < crownInfill.Count; i++)
+
+
+                if (crownCount > 0)
                 {
-                    if (i < crownCount) crownInfill[i].DOFade(1f, 0);
-                    else crownInfill[i].DOFade(0f, 0);
+                    crownInfill[0].DOFade(1f, 0.6f).SetEase(Ease.InCirc);
+                    crownInfill[0].transform.DOScale(Vector3.one, 0.6f).SetEase(Ease.InCirc).OnComplete(() =>
+                    {
+                        if (crownCount > 0) AudioSource.PlayClipAtPoint(crownSount[crownCount - 1], Camera.main.transform.position, 1f);
+                        if (crownCount > 1)
+                        {
+                            crownInfill[1].DOFade(1f, 0.6f).SetEase(Ease.InCirc);
+                            crownInfill[1].transform.DOScale(Vector3.one, 0.6f).SetEase(Ease.InCirc).OnComplete(() =>
+                            {
+                                if (crownCount > 2)
+                                {
+                                    crownInfill[2].DOFade(1f, 0.6f).SetEase(Ease.InCirc);
+                                    crownInfill[2].transform.DOScale(Vector3.one, 0.6f).SetEase(Ease.InCirc);
+                                }
+                            });
+                        }
+                    });
                 }
+
+
             }
             else
             {
@@ -110,7 +129,7 @@ namespace DancingLineFanmade.UI
         public void RevivePlayer()
         {
             foreach (Button b in buttonsRevive) b.interactable = false;
-            if(player.currentCheckpoint.GetComponent<Checkpoint>()) player.currentCheckpoint.GetComponent<Checkpoint>().Revival();
+            if (player.currentCheckpoint.GetComponent<Checkpoint>()) player.currentCheckpoint.GetComponent<Checkpoint>().Revival();
             else if (player.currentCheckpoint.GetComponent<Crown>()) player.currentCheckpoint.GetComponent<Crown>().Revival();
         }
 

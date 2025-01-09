@@ -55,6 +55,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "MaxIFT-4.2.sln",
+    "dotnet.defaultSolution": "MaxIFT-4-3-0.sln",
     "hide-files.files": []
 }

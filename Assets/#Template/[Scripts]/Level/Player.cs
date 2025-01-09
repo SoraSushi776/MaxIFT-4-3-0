@@ -181,6 +181,7 @@ namespace DancingLineFanmade.Level
                 DOTween.Kill(100);
                 henshinObject.transform.DORotate(Player.Instance.transform.eulerAngles, rotationTime).SetId(100);
             });
+            
         }
 
         private void Update()

@@ -259,7 +259,7 @@ RectTransform:
   m_GameObject: {fileID: 1544298069760754301}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2800712443654314501}
@@ -291,7 +291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.8470589, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.8470589, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2267,6 +2267,10 @@ MonoBehaviour:
   - {fileID: 4643111592645695326}
   - {fileID: 8778213335425018012}
   - {fileID: 1389981168113017268}
+  crownSount:
+  - {fileID: 8300000, guid: 3a19d907af43b67499e82096086515d6, type: 3}
+  - {fileID: 8300000, guid: 1096094a83ffe254496362cf17e52ae3, type: 3}
+  - {fileID: 8300000, guid: f4034726cf4b43c46b0bb6bb0ed0e41f, type: 3}
   buttons:
   - {fileID: 5977811721430588594}
   percentageRevive: {fileID: 4760387226577470701}
@@ -2443,7 +2447,7 @@ RectTransform:
   m_GameObject: {fileID: 6341079525657890556}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2800712443654314501}
@@ -2475,7 +2479,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.8470589, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.8470589, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2732,7 +2736,7 @@ RectTransform:
   m_GameObject: {fileID: 7891099167694445469}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2800712443654314501}
@@ -2764,7 +2768,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.8470589, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.8470589, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
