@@ -9,13 +9,13 @@ using UnityEngine;
 public class Henshin : MonoBehaviour
 {
     public bool enableHenshin;
-    
+
     [ShowIf("@enableHenshin")] public Transform henshinObject;
     [ShowIf("@enableHenshin")] public Vector3 objectOffset;
     [ShowIf("@enableHenshin")] public bool showLineTail, showLineBody;
     [ShowIf("@enableHenshin")] public float animationTime;
     public Facing facing;
-    
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -36,6 +36,7 @@ public class Henshin : MonoBehaviour
 
     public enum Facing
     {
+        DontChange,
         FirstDirection,
         SecondDirection
     }
