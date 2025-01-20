@@ -72,6 +72,8 @@ namespace DancingLineFanmade.UI
 
         internal void ShowPage(bool normal, float percent, int blockCount = 0, int crownCount = 0)
         {
+            Ease movementCurve = Ease.InCirc;
+            float movementY = 120F;
             Cursor.visible = true;
             if (normal)
             {
@@ -87,18 +89,24 @@ namespace DancingLineFanmade.UI
 
                 if (crownCount > 0)
                 {
-                    crownInfill[0].DOFade(1f, 0.6f).SetEase(Ease.InCirc);
+                    crownInfill[0].DOFade(1f, 0.6f).SetEase(Ease.Linear);
+                    (crownInfill[0].transform as RectTransform).anchoredPosition = new(-220, movementY);
+                    (crownInfill[0].transform as RectTransform).DOAnchorPos(new(-150, 0), 0.6f).SetEase(movementCurve);
                     crownInfill[0].transform.DOScale(Vector3.one, 0.6f).SetEase(Ease.InCirc).OnComplete(() =>
                     {
                         if (crownCount > 0) AudioSource.PlayClipAtPoint(crownSount[crownCount - 1], Camera.main.transform.position, 1f);
                         if (crownCount > 1)
                         {
-                            crownInfill[1].DOFade(1f, 0.6f).SetEase(Ease.InCirc);
+                            crownInfill[1].DOFade(1f, 0.6f).SetEase(Ease.Linear);
+                            (crownInfill[1].transform as RectTransform).anchoredPosition = new(0, movementY);
+                            (crownInfill[1].transform as RectTransform).DOAnchorPos(Vector2.zero, 0.6f).SetEase(movementCurve);
                             crownInfill[1].transform.DOScale(Vector3.one, 0.6f).SetEase(Ease.InCirc).OnComplete(() =>
                             {
                                 if (crownCount > 2)
                                 {
-                                    crownInfill[2].DOFade(1f, 0.6f).SetEase(Ease.InCirc);
+                                    crownInfill[2].DOFade(1f, 0.6f).SetEase(Ease.Linear);
+                                    (crownInfill[2].transform as RectTransform).anchoredPosition = new(220, movementY);
+                                    (crownInfill[2].transform as RectTransform).DOAnchorPos(new(150, 0), 0.6f).SetEase(movementCurve);
                                     crownInfill[2].transform.DOScale(Vector3.one, 0.6f).SetEase(Ease.InCirc);
                                 }
                             });

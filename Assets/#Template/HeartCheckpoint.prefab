@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82b08f1fec080644fbc610b029d26ce5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotator: {fileID: 702281480854135485}
+  rotator: {fileID: 533166035383947632}
   direction: 0
   camera:
     offset: {x: 0, y: 0, z: 0}
