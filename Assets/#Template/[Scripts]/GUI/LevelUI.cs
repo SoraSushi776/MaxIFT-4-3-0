@@ -14,6 +14,7 @@ namespace DancingLineFanmade.UI
     public class LevelUI : MonoBehaviour
     {
         public static LevelUI Instance { get; private set; }
+        public ParticleSystem system;
 
         [Title("Normal")]
         [SerializeField] private Text title;
@@ -56,6 +57,7 @@ namespace DancingLineFanmade.UI
 
             foreach (Button b in buttons) b.interactable = false;
             foreach (Button b in buttonsRevive) b.interactable = false;
+            system = GameObject.Find("UI Particle").GetComponent<ParticleSystem>();
         }
 
         internal void NormalPage(float percent, int blockCount, int crownCount)
@@ -89,25 +91,41 @@ namespace DancingLineFanmade.UI
 
                 if (crownCount > 0)
                 {
+                    crownInfill[0].GetComponentInChildren<RawImage>().color = new Color(0 ,0 ,0 ,0 );
+                    crownInfill[1].GetComponentInChildren<RawImage>().color = new Color(0 ,0 ,0 ,0 );
+                    crownInfill[2].GetComponentInChildren<RawImage>().color = new Color(0 ,0 ,0 ,0 );
+                    system.Stop();
                     crownInfill[0].DOFade(1f, 0.6f).SetEase(Ease.InCirc);
                     (crownInfill[0].transform as RectTransform).anchoredPosition = new(-170, movementY);
                     (crownInfill[0].transform as RectTransform).DOAnchorPos(new(-150,0),0.6f).SetEase(movementCurve);
+                    crownInfill[0].GetComponentInChildren<RawImage>().DOFade(1f, 0.7f);
+                    system.Play();
                     crownInfill[0].transform.DOScale(Vector3.one, 0.6f).SetEase(Ease.InCirc).OnComplete(() =>
                     {
+                        crownInfill[0].GetComponentInChildren<RawImage>().DOFade(0, 0.3f);
                         if (crownCount > 0) AudioSource.PlayClipAtPoint(crownSount[crownCount - 1], Camera.main.transform.position, 1f);
                         if (crownCount > 1)
                         {
                             crownInfill[1].DOFade(1f, 0.6f).SetEase(Ease.InCirc);
                             (crownInfill[1].transform as RectTransform).anchoredPosition = new(0, movementY);
                             (crownInfill[1].transform as RectTransform).DOAnchorPos(Vector2.zero,0.6f).SetEase(movementCurve);
+                            crownInfill[1].GetComponentInChildren<RawImage>().DOFade(1f, 0.7f);
+                            system.Play();
                             crownInfill[1].transform.DOScale(Vector3.one, 0.6f).SetEase(Ease.InCirc).OnComplete(() =>
                             {
+                                crownInfill[1].GetComponentInChildren<RawImage>().DOFade(0, 0.3f);
                                 if (crownCount > 2)
                                 {
                                     crownInfill[2].DOFade(1f, 0.6f).SetEase(Ease.InCirc);
                                     (crownInfill[2].transform as RectTransform).anchoredPosition = new(170, movementY);
                                     (crownInfill[2].transform as RectTransform).DOAnchorPos(new(150,0),0.6f).SetEase(movementCurve);
-                                    crownInfill[2].transform.DOScale(Vector3.one, 0.6f).SetEase(Ease.InCirc);
+                                    crownInfill[2].GetComponentInChildren<RawImage>().DOFade(1f, 0.7f);
+                                    system.Play();
+                                    crownInfill[2].transform.DOScale(Vector3.one, 0.6f).SetEase(Ease.InCirc).OnComplete(()=>{
+                                        crownInfill[2].GetComponentInChildren<RawImage>().DOFade(0, 0.3f).OnComplete(()=>{
+                                            system.Stop();
+                                        });
+                                    });
                                 }
                             });
                         }
