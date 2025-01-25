@@ -4,6 +4,7 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Playables;
@@ -44,7 +45,7 @@ namespace DancingLineFanmade.Level
         public bool noDeath = false;
         public bool drawDirection = false;
 
-	    internal float Speed { get; set; }
+        internal float Speed { get; set; }
         internal AudioSource SoundTrack { get; set; }
         internal int SoundTrackProgress { get; set; }
         internal int BlockCount { get; set; }
@@ -63,12 +64,12 @@ namespace DancingLineFanmade.Level
         private List<double> timelineProgresses = new List<double>();
         private bool debug = true;
         private bool loading = false;
-        
+
         [HideInInspector] public Transform tail;
         [HideInInspector] public bool allowCreateTail = true;
         [HideInInspector] public Object currentCheckpoint;
         [HideInInspector] public Crown lastCrown;
-        
+
         [HideInInspector] public Transform henshinObject;
         [HideInInspector] public Vector3 objectOffset;
         [HideInInspector] public bool showLineTail, showLineBody;
@@ -174,14 +175,14 @@ namespace DancingLineFanmade.Level
             Instantiate(uiPrefab);
             startPage = Instantiate(startPrefab).GetComponent<StartPage>();
             if (!LoadingPage.Instance) DontDestroyOnLoad(Instantiate(loadingPrefab));
-            
+
             Player.Instance.OnTurn.AddListener(() =>
             {
                 if (!henShin) return;
                 DOTween.Kill(100);
                 henshinObject.transform.DORotate(Player.Instance.transform.eulerAngles, rotationTime).SetId(100);
             });
-            
+
         }
 
         private void Update()
@@ -221,6 +222,11 @@ namespace DancingLineFanmade.Level
                                 startPage = null;
                             }
                             if (!Application.isEditor) Cursor.visible = false;
+
+                            if (currentCheckpoint.GetComponent<Crown>())
+                            {
+                                currentCheckpoint.GetComponent<Crown>().AnimateCrown(false);
+                            }
                         }
                         break;
                     case GameStatus.Playing:
@@ -255,7 +261,7 @@ namespace DancingLineFanmade.Level
                 }
             }
             if (LevelManager.GameState == GameStatus.Playing) SoundTrackProgress = SoundTrack ? (int)(AudioManager.Progress * 100) : 0;
-            
+
             if (henShin)
             {
                 didCreateTail = false;
@@ -312,7 +318,7 @@ namespace DancingLineFanmade.Level
         public void CreateTail()
         {
             if (!allowCreateTail) return;
-            
+
             Quaternion now = Quaternion.Euler(selfTransform.localEulerAngles);
             float offset = tailPrefab.transform.localScale.z * 0.5f;
 
@@ -355,7 +361,7 @@ namespace DancingLineFanmade.Level
         }
 
         internal void SetAnimatorProgresses(float progress = 0f)
-        {  
+        {
             for (int a = 0; a < playedAnimators.Count; a++)
             {
                 if (progress != 0 && a == 0)
@@ -364,7 +370,7 @@ namespace DancingLineFanmade.Level
                 }
                 else
                 {
-                    playedAnimators[a].Play(playedAnimators[a].GetCurrentAnimatorStateInfo(0).fullPathHash, 0,animatorProgresses[a]);
+                    playedAnimators[a].Play(playedAnimators[a].GetCurrentAnimatorStateInfo(0).fullPathHash, 0, animatorProgresses[a]);
                 }
             }
         }

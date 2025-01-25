@@ -30,8 +30,9 @@ namespace DancingLineFanmade.Trigger
 
         private Player player;
         private bool usedRevive;
+        private bool usedParticalDisappear;
 
-        [Title("Player")] [SerializeField] private Direction direction = Direction.First;
+        [Title("Player")][SerializeField] private Direction direction = Direction.First;
 
         [SerializeField, HorizontalGroup("Camera")]
         private new CameraSettings camera = new CameraSettings();
@@ -57,7 +58,8 @@ namespace DancingLineFanmade.Trigger
         [SerializeField, HorizontalGroup("Ambient"), HideLabel]
         private bool manualAmbient = false;
 
-        [Title("Colors")] [SerializeField, TableList]
+        [Title("Colors")]
+        [SerializeField, TableList]
         private List<SingleColor> materialColorsAuto = new List<SingleColor>();
 
         [SerializeField, TableList] private List<SingleColor> materialColorsManual = new List<SingleColor>();
@@ -65,7 +67,7 @@ namespace DancingLineFanmade.Trigger
         [SerializeField, TableList] private List<SingleImage> imageColorsAuto = new List<SingleImage>();
         [SerializeField, TableList] private List<SingleImage> imageColorsManual = new List<SingleImage>();
 
-        [Title("Event")] [SerializeField] private UnityEvent onRevive = new UnityEvent();
+        [Title("Event")][SerializeField] private UnityEvent onRevive = new UnityEvent();
 
         [Space(30.0f), SerializeField] private bool AutoRecord = false;
 
@@ -152,9 +154,9 @@ namespace DancingLineFanmade.Trigger
                 if (!s.activeOnAwake)
                     s.AddRevives();
             foreach (PlayAnimator a in animators)
-            foreach (SingleAnimator s in a.animators)
-                if (!s.dontRevive)
-                    s.GetState();
+                foreach (SingleAnimator s in a.animators)
+                    if (!s.dontRevive)
+                        s.GetState();
             foreach (FakePlayer f in fakes) f.GetData();
             player.GetAnimatorProgresses();
             player.GetTimelineProgresses();
@@ -189,7 +191,7 @@ namespace DancingLineFanmade.Trigger
             AnimateCrown(true);
         }
 
-        private void AnimateCrown(bool show)
+        public void AnimateCrown(bool show)
         {
             crownTween = crownRenderer.DOFade(show ? 1 : 0, auraTweenDuration / 4f);
             crownTween.SetEase(Ease.OutSine);
@@ -198,6 +200,14 @@ namespace DancingLineFanmade.Trigger
                 crownTween.Kill();
                 crownTween = null;
             });
+
+            if (!show && !usedParticalDisappear)
+            {
+                var systems = crownAura.GetComponentsInChildren<ParticleSystem>();
+                crownAura.Play();
+
+                usedParticalDisappear = true;
+            }
         }
 
         private void RefreshParticlesColor()
@@ -242,7 +252,6 @@ namespace DancingLineFanmade.Trigger
                     Player.Rigidbody.isKinematic = false;
                     player.allowTurn = true;
                 });
-            AnimateCrown(false);
         }
 
         private void ResetScene()
@@ -271,9 +280,9 @@ namespace DancingLineFanmade.Trigger
                 if (!s.activeOnAwake)
                     s.Revive();
             foreach (PlayAnimator a in animators)
-            foreach (SingleAnimator s in a.animators)
-                if (!s.dontRevive && s.played)
-                    s.SetState();
+                foreach (SingleAnimator s in a.animators)
+                    if (!s.dontRevive && s.played)
+                        s.SetState();
             foreach (FakePlayer f in fakes)
                 if (f.playing)
                     f.ResetState();
