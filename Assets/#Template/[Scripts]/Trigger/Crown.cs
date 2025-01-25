@@ -207,6 +207,9 @@ namespace DancingLineFanmade.Trigger
                 crownAura.Play();
 
                 usedParticalDisappear = true;
+
+                // 粒子向上移动
+                crownAura.transform.DOMoveY(crownAura.transform.position.y + 5f, auraTweenDuration / 2f).SetEase(Ease.Linear);
             }
         }
 
