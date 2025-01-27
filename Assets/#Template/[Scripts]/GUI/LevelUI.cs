@@ -97,9 +97,9 @@ namespace DancingLineFanmade.UI
                 if (crownCount > 0)
                 {
                     s.Append(crownInfill[0].DOFade(1f, CrownAniTime01).SetEase(Ease.Linear));
-                    s.Append(crownDisperse[0].transform.DOScale(CrownDisperseScale, 0f)).SetEase(Ease.Linear);
-                    s.Append(crownDisperse[0].DOFade(0f, CrownAniTime02).SetEase(Ease.Linear));
-                    s.Insert(CrownAniTime01, crownDisperse[0].transform.DOScale(new Vector3(m_Scale.x,m_Scale.y,1), CrownAniTime02));
+                    //s.Append(crownDisperse[0].transform.DOScale(CrownDisperseScale, 0f)).SetEase(Ease.Linear);
+                    //s.Append(crownDisperse[0].DOFade(0f, CrownAniTime02).SetEase(Ease.Linear));
+                    //s.Insert(CrownAniTime01, crownDisperse[0].transform.DOScale(new Vector3(m_Scale.x,m_Scale.y,1), CrownAniTime02));
                     (crownInfill[0].transform as RectTransform).anchoredPosition = new(-220, movementY);
                     (crownInfill[0].transform as RectTransform).DOAnchorPos(new(-150, 0), 0.6f).SetEase(movementCurve);
                     crownInfill[0].transform.DOScale(Vector3.one, CrownAniTime01).SetEase(Ease.InCubic).OnComplete(() =>
@@ -108,9 +108,9 @@ namespace DancingLineFanmade.UI
                         if (crownCount > 1)
                         {
                             s.Append(crownInfill[1].DOFade(1f, CrownAniTime01).SetEase(Ease.Linear));
-                            s.Append(crownDisperse[1].transform.DOScale(CrownDisperseScale, 0f)).SetEase(Ease.Linear);
-                            s.Append(crownDisperse[1].DOFade(0f, CrownAniTime02).SetEase(Ease.Linear));
-                            s.Insert(CrownAniTime01, crownDisperse[1].transform.DOScale(new Vector3(m_Scale.x, m_Scale.y, 1), CrownAniTime02));
+                            //s.Append(crownDisperse[1].transform.DOScale(CrownDisperseScale, 0f)).SetEase(Ease.Linear);
+                            //s.Append(crownDisperse[1].DOFade(0f, CrownAniTime02).SetEase(Ease.Linear));
+                            //s.Insert(CrownAniTime01, crownDisperse[1].transform.DOScale(new Vector3(m_Scale.x, m_Scale.y, 1), CrownAniTime02));
                             (crownInfill[1].transform as RectTransform).anchoredPosition = new(0, movementY);
                             (crownInfill[1].transform as RectTransform).DOAnchorPos(Vector2.zero, 0.6f).SetEase(movementCurve);
                             crownInfill[1].transform.DOScale(Vector3.one, 0.6f).SetEase(Ease.InCubic).OnComplete(() =>
@@ -118,9 +118,9 @@ namespace DancingLineFanmade.UI
                                 if (crownCount > 2)
                                 {
                                     s.Append(crownInfill[2].DOFade(1f, CrownAniTime01).SetEase(Ease.Linear));
-                                    s.Append(crownDisperse[2].transform.DOScale(CrownDisperseScale, 0f)).SetEase(Ease.Linear);
-                                    s.Append(crownDisperse[2].DOFade(0f, CrownAniTime02).SetEase(Ease.Linear));
-                                    s.Insert(CrownAniTime01, crownDisperse[2].transform.DOScale(new Vector3(m_Scale.x, m_Scale.y, 1), CrownAniTime02));
+                                    //s.Append(crownDisperse[2].transform.DOScale(CrownDisperseScale, 0f)).SetEase(Ease.Linear);
+                                    //s.Append(crownDisperse[2].DOFade(0f, CrownAniTime02).SetEase(Ease.Linear));
+                                    //s.Insert(CrownAniTime01, crownDisperse[2].transform.DOScale(new Vector3(m_Scale.x, m_Scale.y, 1), CrownAniTime02));
                                     (crownInfill[2].transform as RectTransform).anchoredPosition = new(220, movementY);
                                     (crownInfill[2].transform as RectTransform).DOAnchorPos(new(150, 0), 0.6f).SetEase(movementCurve);
                                     crownInfill[2].transform.DOScale(Vector3.one, 0.6f).SetEase(Ease.InCubic);
