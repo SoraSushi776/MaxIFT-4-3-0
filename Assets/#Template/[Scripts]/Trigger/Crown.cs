@@ -209,7 +209,7 @@ namespace DancingLineFanmade.Trigger
                 usedParticalDisappear = true;
 
                 // 粒子向上移动
-                crownAura.transform.DOMoveY(crownAura.transform.position.y + 10f, auraTweenDuration / 2f).SetEase(Ease.Linear);
+                crownAura.transform.DOMoveY(crownAura.transform.position.y + 10f, auraTweenDuration / 1f).SetEase(Ease.Linear);
             }
         }
 
