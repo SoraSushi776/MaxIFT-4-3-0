@@ -8,7 +8,6 @@ namespace DancingLineFanmade.Auto
     {
         private Transform playerTransform;
         private Transform selfTransform;
-        private float triggerDistance = 0.33f;
         private bool triggered = false;
 
         private float Distance

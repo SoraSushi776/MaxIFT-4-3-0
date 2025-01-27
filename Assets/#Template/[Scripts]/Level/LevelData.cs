@@ -15,6 +15,7 @@ namespace DancingLineFanmade.Level
         public AudioClip soundTrack;
         [MinValue(0f)] public float speed = 12f;
         [MinValue(0f)] public float timeScale = 1f;
+        [Min(0)]public int MaxDiamondCount = 10;
         public Vector3 gravity = LevelManager.defaultGravity;
         [TableList] public List<SingleColor> colors = new List<SingleColor>();
 
