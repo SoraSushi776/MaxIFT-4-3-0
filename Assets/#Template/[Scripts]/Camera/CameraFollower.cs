@@ -12,12 +12,26 @@ namespace DancingLineFanmade.Level
 
         public static CameraFollower Instance { get; private set; }
         public Camera thisCamera { get; set; }
+        [HideInInspector] public Transform follower;
 
         [SerializeField] private Transform target;
-
-        [SerializeField] internal Vector3 followSpeed = new Vector3(1.5f, 1.5f, 1.5f);
         [SerializeField] internal bool follow = true;
         [SerializeField] internal bool smooth = true;
+
+        // 转换坐标和跟随的速度
+        public Vector3 followSpeed = new(1.2f, 3f, 6f);
+        private readonly Quaternion vectorRotation = Quaternion.Euler(0, -45, 0);
+        private Vector3 Translation
+        {
+            get
+            {
+                var targetPosition = vectorRotation * target.position;
+                var followerPosition = vectorRotation * follower.position;
+                return targetPosition - followerPosition;
+            }
+        }
+        private Transform origin;
+        public bool reverseSpeed;
 
         internal Transform rotator;
         internal Transform scale;
@@ -38,18 +52,47 @@ namespace DancingLineFanmade.Level
 
         private void Start()
         {
+            follower = transform;
             rotator = selfTransform.Find("Rotator");
             scale = rotator.Find("Scale");
             thisCamera = scale.Find("Camera").GetComponent<Camera>();
+
+            // 创建一个新的坐标原点
+            origin = new GameObject("CameraTranslateOrigin")
+            {
+                transform =
+                {
+                    position = Vector3.zero,
+                    rotation = Quaternion.Euler(0, 45, 0),
+                    localScale = Vector3.one
+                }
+            }.transform;
         }
 
         private void Update()
         {
+            /* 
             Vector3 translation = target.position - selfTransform.position;
             if (LevelManager.GameState == GameStatus.Playing && follow)
             {
                 if (smooth) selfTransform.Translate(new Vector3(translation.x * followSpeed.x * Time.deltaTime, translation.y * followSpeed.y * Time.deltaTime, translation.z * followSpeed.z * Time.deltaTime));
                 else selfTransform.position = target.position;
+            }
+            */
+
+            // 新的跟随代码
+            var result = reverseSpeed
+                ? new Vector3(Translation.x * Time.smoothDeltaTime * followSpeed.z,
+                    Translation.y * Time.smoothDeltaTime * followSpeed.y,
+                    Translation.z * Time.smoothDeltaTime * followSpeed.x)
+                : new Vector3(Translation.x * Time.smoothDeltaTime * followSpeed.x,
+                    Translation.y * Time.smoothDeltaTime * followSpeed.y,
+                    Translation.z * Time.smoothDeltaTime * followSpeed.z);
+            if (follow)
+            {
+                if (smooth)
+                    follower.Translate(result, origin);
+                else follower.Translate(result);
             }
         }
 
