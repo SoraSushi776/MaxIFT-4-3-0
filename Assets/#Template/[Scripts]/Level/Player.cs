@@ -419,7 +419,7 @@ namespace DancingLineFanmade.Level
                 GUI.Label(new Rect(10, 70, 120, 50), "游戏状态：" + LevelManager.GameState, style);
                 GUI.Label(new Rect(10, 100, 120, 50), "线的坐标：" + selfTransform.localPosition, style);
                 GUI.Label(new Rect(10, 130, 120, 50), "线的朝向：" + selfTransform.localEulerAngles, style);
-                GUI.Label(new Rect(10, 160, 120, 50), "已获取方块数量：" + BlockCount + "/10", style);
+                GUI.Label(new Rect(10, 160, 120, 50), "已获取方块数量：" + BlockCount + "/" + levelData.MaxDiamondCount, style);
                 GUI.Label(new Rect(10, 190, 120, 50), "已获取皇冠数量：" + CrownCount + "/3", style);
                 if (CameraFollower.Instance)
                 {
