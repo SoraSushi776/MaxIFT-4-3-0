@@ -88,7 +88,7 @@ namespace DancingLineFanmade.Level
                 : new Vector3(Translation.x * Time.smoothDeltaTime * followSpeed.x,
                     Translation.y * Time.smoothDeltaTime * followSpeed.y,
                     Translation.z * Time.smoothDeltaTime * followSpeed.z);
-            if (follow)
+            if (LevelManager.GameState == GameStatus.Playing && follow)
             {
                 if (smooth)
                     follower.Translate(result, origin);
