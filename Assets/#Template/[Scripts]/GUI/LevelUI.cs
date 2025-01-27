@@ -126,7 +126,7 @@ namespace DancingLineFanmade.UI
                         system.Play();
                         if (crownCount > 0) AudioSource.PlayClipAtPoint(crownSount[crownCount - 1], Camera.main.transform.position, 1f);
                         if (crownCount > 1)
-                        {=
+                        {
                             s.Append(crownInfill[1].DOFade(1f, CrownAniTime01).SetEase(Ease.Linear));
                             //s.Append(crownDisperse[1].transform.DOScale(CrownDisperseScale, 0f)).SetEase(Ease.Linear);
                             //s.Append(crownDisperse[1].DOFade(0f, CrownAniTime02).SetEase(Ease.Linear));
