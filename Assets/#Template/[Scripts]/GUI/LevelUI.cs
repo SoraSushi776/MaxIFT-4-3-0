@@ -9,6 +9,7 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using JetBrains.Annotations;
+using AssetKits.ParticleImage;
 
 namespace DancingLineFanmade.UI
 {
@@ -89,10 +90,6 @@ namespace DancingLineFanmade.UI
             Ease movementCurve = Ease.InCubic;
             float movementY = 120F;
             Cursor.visible = true;
-            var s = DOTween.Sequence();
-            var CrownAniTime01 = 0.6f;
-            var CrownAniTime02 = 1f;
-            var CrownDisperseScale = 1f;
             if (normal)
             {
                 moveUpPart.DOAnchorPos(Vector2.zero, 0.4f).SetEase(Ease.OutSine);
@@ -104,6 +101,9 @@ namespace DancingLineFanmade.UI
                 block.text = $"{blockCount}/{player.levelData.MaxDiamondCount}";
                 title.text = player.levelData.levelTitle;
 
+                if(crownCount >= 3 && blockCount >= player.levelData.MaxDiamondCount){
+                    GetComponentInChildren<ParticleImage>().Play();
+                }
 
                 if (crownCount > 0)
                 {
@@ -116,26 +116,19 @@ namespace DancingLineFanmade.UI
                     crownInfill[0].DOFade(1f, 0.6f).SetEase(Ease.Linear);
                     (crownInfill[0].transform as RectTransform).anchoredPosition = new(-220, movementY);
                     (crownInfill[0].transform as RectTransform).DOAnchorPos(new(-150,0),0.6f).SetEase(movementCurve);
-                    //crownInfill[0].GetComponentInChildren<RawImage>().DOFade(1f, 0.7f);
-                    
                     
                     crownInfill[0].transform.DOScale(Vector3.one, 0.6f).SetEase(Ease.InCubic).OnComplete(() =>
                     {
-                        //crownInfill[0].GetComponentInChildren<RawImage>().DOFade(0, 0.3f);
                         crownParticlesImage[0].color = Color.white;
                         system.Play();
                         if (crownCount > 0) AudioSource.PlayClipAtPoint(crownSount[crownCount - 1], Camera.main.transform.position, 1f);
                         if (crownCount > 1)
                         {
-                            s.Append(crownInfill[1].DOFade(1f, CrownAniTime01).SetEase(Ease.Linear));
-                            //s.Append(crownDisperse[1].transform.DOScale(CrownDisperseScale, 0f)).SetEase(Ease.Linear);
-                            //s.Append(crownDisperse[1].DOFade(0f, CrownAniTime02).SetEase(Ease.Linear));
-                            //s.Insert(CrownAniTime01, crownDisperse[1].transform.DOScale(new Vector3(m_Scale.x, m_Scale.y, 1), CrownAniTime02));
+                            crownInfill[1].DOFade(1f, 0.6f).SetEase(Ease.Linear);
                             (crownInfill[1].transform as RectTransform).anchoredPosition = new(0, movementY);
                             (crownInfill[1].transform as RectTransform).DOAnchorPos(Vector2.zero, 0.6f).SetEase(movementCurve);
                             crownInfill[1].transform.DOScale(Vector3.one, 0.6f).SetEase(Ease.InCubic).OnComplete(() =>
                             {
-                                //crownInfill[1].GetComponentInChildren<RawImage>().DOFade(0, 0.3f);
                                 crownParticlesImage[0].color = fade;
                                 crownParticlesImage[1].color = Color.white;
                                 system.Play();
@@ -144,7 +137,6 @@ namespace DancingLineFanmade.UI
                                     crownInfill[2].DOFade(1f, 0.6f).SetEase(Ease.Linear);
                                     (crownInfill[2].transform as RectTransform).anchoredPosition = new(220, movementY);
                                     (crownInfill[2].transform as RectTransform).DOAnchorPos(new(150,0),0.6f).SetEase(movementCurve);
-                                    //crownInfill[2].GetComponentInChildren<RawImage>().DOFade(1f, 0.7f);
                                  
                                     crownInfill[2].transform.DOScale(Vector3.one, 0.6f).SetEase(Ease.InCubic).OnComplete(()=>{
                                         crownParticlesImage[1].color = fade;
