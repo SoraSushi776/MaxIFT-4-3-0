@@ -33,45 +33,33 @@ namespace DancingLineFanmade.UI
         {
             post = FindObjectOfType<PostProcessVolume>();
             LevelManager.SetFPSLimit(int.MaxValue);
-#if UNITY_ANDROID
             QualitySettings.shadows = ShadowQuality.Disable;
-#endif
             switch (id)
             {
                 case 0:
                     text.text = "低";
-#if UNITY_STANDALONE || UNITY_IOS || UNITY_EDITOR
                     QualitySettings.shadows = ShadowQuality.Disable;
-                    post.enabled = false;
-#endif
+                    if(post != null){post.enabled = false;}
                     break;
                 case 1:
                     text.text = "中";
-#if UNITY_STANDALONE || UNITY_IOS || UNITY_EDITOR
                     QualitySettings.shadows = ShadowQuality.Disable;
-                    post.enabled = false;
-#endif
+                    if(post != null){post.enabled = false;}
                     break;
                 case 2:
                     text.text = "高";
-#if UNITY_STANDALONE || UNITY_IOS || UNITY_EDITOR
                     QualitySettings.shadows = ShadowQuality.All;
-                    post.enabled = false;
-#endif
+                    if(post != null){post.enabled = false;}
                     break;
                 case 3:
-                    text.text = "精";
-#if UNITY_STANDALONE || UNITY_IOS || UNITY_EDITOR
+                    text.text = "极高";
                     QualitySettings.shadows = ShadowQuality.All;
-                    post.enabled = true;
-#endif
+                    if(post != null){post.enabled = true;}
                     break;
                 case 4:
-                    text.text = "极";
-#if UNITY_STANDALONE || UNITY_IOS || UNITY_EDITOR
+                    text.text = "极致";
                     QualitySettings.shadows = ShadowQuality.All;
-                    post.enabled = true;
-#endif
+                    if(post != null){post.enabled = true;}
                     break;
             }
         }

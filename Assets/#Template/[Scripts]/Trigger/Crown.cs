@@ -247,7 +247,7 @@ namespace DancingLineFanmade.Trigger
                     LevelManager.revivePlayer.Invoke();
                     LevelManager.DestroyRemain();
                     Player.Rigidbody.isKinematic = true;
-                    if (!usedRevive) Player.Instance.CrownCount--;
+                    if (!usedRevive && player.CrownCount >= 1) Player.Instance.CrownCount--;
                     usedRevive = true;
                 },
                 () =>

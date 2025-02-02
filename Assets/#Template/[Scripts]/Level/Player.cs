@@ -67,7 +67,7 @@ namespace DancingLineFanmade.Level
 
         [HideInInspector] public Transform tail;
         [HideInInspector] public bool allowCreateTail = true;
-        [HideInInspector] public Object currentCheckpoint;
+        [HideInInspector] public Component currentCheckpoint;
         [HideInInspector] public Crown lastCrown;
 
         [HideInInspector] public Transform henshinObject;
@@ -222,10 +222,9 @@ namespace DancingLineFanmade.Level
                                 startPage = null;
                             }
                             if (!Application.isEditor) Cursor.visible = false;
-
-                            if (currentCheckpoint.GetComponent<Crown>())
+                            if (currentCheckpoint?.GetComponent<Crown>())
                             {
-                                currentCheckpoint.GetComponent<Crown>().AnimateCrown(false);
+                                currentCheckpoint?.GetComponent<Crown>()?.AnimateCrown(false);
                             }
                         }
                         break;
