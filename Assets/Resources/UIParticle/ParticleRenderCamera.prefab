@@ -8,7 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1689119976826607086}
+  - component: {fileID: 8188796294657539091}
   - component: {fileID: 1689119976826609189}
   - component: {fileID: 1689119976826609168}
   m_Layer: 7
@@ -18,7 +18,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1689119976826607086
+--- !u!4 &8188796294657539091
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,7 +116,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.75
+      scalar: 5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1237,8 +1237,8 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 0, a: 1}
-        key1: {r: 0.9150943, g: 0.9150943, b: 0, a: 0}
+        key0: {r: 1, g: 0.9724137, b: 0, a: 1}
+        key1: {r: 1, g: 0.9724137, b: 0, a: 0}
         key2: {r: 1, g: 0.9428212, b: 0.2235294, a: 0}
         key3: {r: 1, g: 0.5578013, b: 0.49411762, a: 0}
         key4: {r: 1, g: 0.33490568, b: 0.9323632, a: 0}
@@ -4705,7 +4705,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 161c3de0cbf09c34cb324c6c123facc4, type: 2}
+  - {fileID: 2100000, guid: 2abc7557deaef2a42a89ebfa30486883, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4786,7 +4786,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1689119976826607086}
+  - {fileID: 8188796294657539091}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
