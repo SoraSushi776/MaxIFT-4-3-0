@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9eeae46dfa7cb784e8f4caf828b6f773, type: 3}
-  m_Name: ShakeItUp
+  m_Name: LevelData
   m_EditorClassIdentifier: 
-  levelTitle: Shake It Up
+  levelTitle: Test
   soundTrack: {fileID: 8300000, guid: 33f66b899d38ce949a489aaee7d6b3fe, type: 3}
   speed: 12
   timeScale: 1
+  MaxDiamondCount: 10
   gravity: {x: 0, y: -9.3, z: 0}
   colors:
   - material: {fileID: 2100000, guid: 4a9a05847c8609548b12b570d0f8317f, type: 2}

@@ -100,6 +100,7 @@ namespace DancingLineFanmade.Trigger
             crownMeshRenderer = crownObject.GetComponent<MeshRenderer>();
             InitParticles();
             if (crownAura) crownAura.transform.parent = transform;
+            revivePosition.gameObject.SetActive(false);
         }
 
         private void Update()
