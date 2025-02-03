@@ -9810,9 +9810,12 @@ MonoBehaviour:
   onRevive:
     m_PersistentCalls:
       m_Calls: []
-  AutoRecord: 0
+  AutoRecord: 1
   GameTime: 0
   playerSpeed: 12
+  eventWeNeedInvokeWhenJumpToHere:
+    m_PersistentCalls:
+      m_Calls: []
   revivePosition: {fileID: 9193384916318163942}
 --- !u!1 &7624165497753955748
 GameObject:
@@ -10061,9 +10064,8 @@ GameObject:
   - component: {fileID: 9193384916318163942}
   - component: {fileID: 2902494920430927622}
   - component: {fileID: 5935324856439119884}
-  - component: {fileID: 834733442796867295}
   m_Layer: 0
-  m_Name: RP
+  m_Name: RevivePosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10099,7 +10101,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8649024572937251231}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -10134,16 +10136,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &834733442796867295
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8649024572937251231}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}

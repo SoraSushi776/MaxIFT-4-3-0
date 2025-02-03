@@ -29,7 +29,6 @@ namespace DancingLineFanmade.UI
         [SerializeField] private RectTransform moveDownPart;
         [SerializeField] private List<CanvasGroup> normalAlpha = new List<CanvasGroup>();
         [SerializeField] private List<Image> crownInfill = new List<Image>();
-        [SerializeField] private List<Image> crownDisperse = new List<Image>();
         [SerializeField] public Vector2 m_Scale;
         [SerializeField] private List<AudioClip> crownSount = new List<AudioClip>();
         public List<RawImage> crownParticlesImage = new();
@@ -131,6 +130,7 @@ namespace DancingLineFanmade.UI
                             {
                                 crownParticlesImage[0].color = fade;
                                 crownParticlesImage[1].color = Color.white;
+                                system.Stop();
                                 system.Play();
                                 if (crownCount > 2)
                                 {
@@ -141,8 +141,8 @@ namespace DancingLineFanmade.UI
                                     crownInfill[2].transform.DOScale(Vector3.one, 0.6f).SetEase(Ease.InCubic).OnComplete(()=>{
                                         crownParticlesImage[1].color = fade;
                                         crownParticlesImage[2].color = Color.white;
+                                        system.Stop();
                                         system.Play();
-                                        
                                     });
                                 }
                             });

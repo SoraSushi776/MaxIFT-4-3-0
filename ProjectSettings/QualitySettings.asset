@@ -19,7 +19,7 @@ QualitySettings:
     shadowCascade4Split: {x: 0.06666667, y: 0.2, z: 0.46666667}
     shadowmaskMode: 0
     skinWeights: 2
-    textureQuality: 0
+    textureQuality: 1
     anisotropicTextures: 0
     antiAliasing: 0
     softParticles: 0
@@ -48,7 +48,7 @@ QualitySettings:
     shadows: 0
     shadowResolution: 2
     shadowProjection: 1
-    shadowCascades: 4
+    shadowCascades: 2
     shadowDistance: 80
     shadowNearPlaneOffset: 3
     shadowCascade2Split: 0.33333334
@@ -84,17 +84,17 @@ QualitySettings:
     shadows: 1
     shadowResolution: 2
     shadowProjection: 1
-    shadowCascades: 4
+    shadowCascades: 2
     shadowDistance: 100
     shadowNearPlaneOffset: 3
-    shadowCascade2Split: 0.33333334
-    shadowCascade4Split: {x: 0.21621622, y: 0.427027, z: 0.6522523}
+    shadowCascade2Split: 0.42817104
+    shadowCascade4Split: {x: 0.27411753, y: 0.4897533, z: 0.7029158}
     shadowmaskMode: 1
     skinWeights: 4
     textureQuality: 0
     anisotropicTextures: 2
     antiAliasing: 0
-    softParticles: 0
+    softParticles: 1
     softVegetation: 1
     realtimeReflectionProbes: 1
     billboardsFaceCameraPosition: 1
@@ -107,7 +107,7 @@ QualitySettings:
     streamingMipmapsRenderersPerFrame: 512
     streamingMipmapsMaxLevelReduction: 2
     streamingMipmapsMaxFileIORequests: 1024
-    particleRaycastBudget: 4096
+    particleRaycastBudget: 256
     asyncUploadTimeSlice: 2
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
@@ -124,13 +124,13 @@ QualitySettings:
     shadowDistance: 100
     shadowNearPlaneOffset: 3
     shadowCascade2Split: 0.33333334
-    shadowCascade4Split: {x: 0.21621622, y: 0.427027, z: 0.6522523}
+    shadowCascade4Split: {x: 0.28859255, y: 0.4969908, z: 0.6522523}
     shadowmaskMode: 1
     skinWeights: 4
     textureQuality: 0
     anisotropicTextures: 2
     antiAliasing: 2
-    softParticles: 0
+    softParticles: 1
     softVegetation: 1
     realtimeReflectionProbes: 1
     billboardsFaceCameraPosition: 1
@@ -143,7 +143,7 @@ QualitySettings:
     streamingMipmapsRenderersPerFrame: 512
     streamingMipmapsMaxLevelReduction: 2
     streamingMipmapsMaxFileIORequests: 1024
-    particleRaycastBudget: 4096
+    particleRaycastBudget: 1024
     asyncUploadTimeSlice: 2
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
@@ -160,13 +160,13 @@ QualitySettings:
     shadowDistance: 100
     shadowNearPlaneOffset: 3
     shadowCascade2Split: 0.33333334
-    shadowCascade4Split: {x: 0.21621622, y: 0.427027, z: 0.6522523}
+    shadowCascade4Split: {x: 0.30427426, y: 0.4776905, z: 0.6522523}
     shadowmaskMode: 1
     skinWeights: 4
     textureQuality: 0
     anisotropicTextures: 2
     antiAliasing: 2
-    softParticles: 0
+    softParticles: 1
     softVegetation: 1
     realtimeReflectionProbes: 1
     billboardsFaceCameraPosition: 1
@@ -179,7 +179,7 @@ QualitySettings:
     streamingMipmapsRenderersPerFrame: 512
     streamingMipmapsMaxLevelReduction: 2
     streamingMipmapsMaxFileIORequests: 1024
-    particleRaycastBudget: 4096
+    particleRaycastBudget: 2048
     asyncUploadTimeSlice: 2
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1

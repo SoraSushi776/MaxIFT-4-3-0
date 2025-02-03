@@ -183,7 +183,7 @@ MonoBehaviour:
   onRevive:
     m_PersistentCalls:
       m_Calls: []
-  AutoRecord: 0
+  AutoRecord: 1
   GameTime: 0
   playerSpeed: 12
 --- !u!1 &6032378458756758833
