@@ -128,7 +128,7 @@ namespace DancingLineFanmade.Level
 
         public static void GameOverNormal(bool complete)
         {
-            float percentage = complete ? 1f : AudioManager.Progress;
+            float percentage = complete ? 1f : Player.Instance.LevelProgress / 100f;
 
             if (GameState == GameStatus.Died || GameState == GameStatus.Completed || GameState == GameStatus.Moving)
                 LevelUI.Instance.NormalPage(percentage, Player.Instance.BlockCount, Player.Instance.CrownCount);
@@ -138,7 +138,7 @@ namespace DancingLineFanmade.Level
         {
             if (GameState == GameStatus.Died || GameState == GameStatus.Moving)
             {
-                LevelUI.Instance.RevivePage(AudioManager.Progress);
+                LevelUI.Instance.RevivePage(Player.Instance.LevelProgress / 100f);
             }
         }
 

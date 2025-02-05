@@ -272,7 +272,7 @@ namespace DancingLineFanmade.Trigger
             AudioManager.Stop();
             AudioManager.Time = GameTime;
             AudioManager.Volume = 1f;
-            player.SoundTrackProgress = trackProgress;
+            player.LevelProgress = trackProgress;
             player.ClearPool();
             player.BlockCount = 0;
             player.Speed = playerSpeed;

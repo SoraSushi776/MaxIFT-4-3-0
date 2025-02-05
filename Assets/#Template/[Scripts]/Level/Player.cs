@@ -47,7 +47,7 @@ namespace DancingLineFanmade.Level
 
         internal float Speed { get; set; }
         internal AudioSource SoundTrack { get; set; }
-        internal int SoundTrackProgress { get; set; }
+        internal int LevelProgress { get; set; }
         internal int BlockCount { get; set; }
         internal int CrownCount { get; set; }
         internal UnityEvent OnTurn { get; private set; }
@@ -104,6 +104,7 @@ namespace DancingLineFanmade.Level
         private float lastTime;
         private float fps;
         private const float timeInterval = 0.1f;
+        public float gameTime;
 
         private GameEvents events;
         public GameEvents Events
@@ -222,7 +223,8 @@ namespace DancingLineFanmade.Level
                                 startPage = null;
                             }
                             if (!Application.isEditor) Cursor.visible = false;
-                            if(currentCheckpoint != null){
+                            if (currentCheckpoint != null)
+                            {
                                 if (currentCheckpoint.GetComponent<Crown>())
                                 {
                                     currentCheckpoint.GetComponent<Crown>().AnimateCrown(false);
@@ -232,6 +234,7 @@ namespace DancingLineFanmade.Level
                         break;
                     case GameStatus.Playing:
                         if (LevelManager.Clicked && !Falling && !disallowInput) Turn();
+                        gameTime += Time.deltaTime;
                         break;
                 }
             }
@@ -261,7 +264,13 @@ namespace DancingLineFanmade.Level
                     }
                 }
             }
-            if (LevelManager.GameState == GameStatus.Playing) SoundTrackProgress = SoundTrack ? (int)(AudioManager.Progress * 100) : 0;
+            if (LevelManager.GameState == GameStatus.Playing)
+            {
+                if (levelData.useMusicTime)
+                    LevelProgress = SoundTrack ? (int)(AudioManager.Progress * 100) : 0;
+                else
+                    LevelProgress = (int)(gameTime / levelData.levelTime * 100) >= 100 ? 100 : (int)(gameTime / levelData.levelTime * 100);
+            }
 
             if (henShin)
             {
@@ -422,7 +431,7 @@ namespace DancingLineFanmade.Level
             if (debug)
             {
                 GUI.Label(new Rect(10, 10, 120, 50), "FPS：" + finalFps, style);
-                GUI.Label(new Rect(10, 40, 120, 50), "关卡进度：" + SoundTrackProgress + "%", style);
+                GUI.Label(new Rect(10, 40, 120, 50), "关卡进度：" + LevelProgress + "%", style);
                 GUI.Label(new Rect(10, 70, 120, 50), "游戏状态：" + LevelManager.GameState, style);
                 GUI.Label(new Rect(10, 100, 120, 50), "线的坐标：" + selfTransform.localPosition, style);
                 GUI.Label(new Rect(10, 130, 120, 50), "线的朝向：" + selfTransform.localEulerAngles, style);

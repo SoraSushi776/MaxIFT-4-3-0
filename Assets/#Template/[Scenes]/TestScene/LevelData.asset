@@ -17,6 +17,8 @@ MonoBehaviour:
   speed: 12
   timeScale: 1
   MaxDiamondCount: 10
+  useMusicTime: 0
+  levelTime: 7
   gravity: {x: 0, y: -9.3, z: 0}
   colors:
   - material: {fileID: 2100000, guid: 4a9a05847c8609548b12b570d0f8317f, type: 2}

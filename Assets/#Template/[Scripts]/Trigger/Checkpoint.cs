@@ -50,7 +50,7 @@ namespace DancingLineFanmade.Trigger
         private float GameTime;
         private int trackProgress;
         [SerializeField, HideIf(nameof(AutoRecord))]
-	    private float playerSpeed;
+        private float playerSpeed;
         private Vector3 sceneGravity;
         private Vector3 playerFirstDirection;
         private Vector3 playerSecondDirection;
@@ -98,13 +98,13 @@ namespace DancingLineFanmade.Trigger
             if (AutoRecord)
             {
                 GameTime = AudioManager.Time;
-                playerSpeed = player.Speed; 
+                playerSpeed = player.Speed;
             }
 
             playerSpeed = player.Speed;
             playerFirstDirection = player.firstDirection;
             playerSecondDirection = player.secondDirection;
-            trackProgress = player.SoundTrackProgress;
+            trackProgress = player.LevelProgress;
             sceneGravity = Physics.gravity;
 
             foreach (SetActive s in actives) if (!s.activeOnAwake) s.AddRevives();
@@ -147,7 +147,7 @@ namespace DancingLineFanmade.Trigger
             AudioManager.Stop();
             AudioManager.Time = GameTime;
             AudioManager.Volume = 1f;
-            player.SoundTrackProgress = trackProgress;
+            player.LevelProgress = trackProgress;
             player.ClearPool();
             player.BlockCount = 0;
             player.Speed = playerSpeed;
