@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/Curvify/Editor/Core/UI/USS/stylesheet_curvify_shared.uss?fileID=7433441132597879392&amp;guid=fb47dfecc3eb54091b2e3f7875bf33a7&amp;type=3#stylesheet_curvify_shared" />
+    <ui:VisualElement focusable="true" class="curvify-window-background" style="flex-grow: 1;">
+        <ui:Vector2Field label="Left Control Point" name="left-control-point-field" style="height: 19px;" />
+        <ui:Vector2Field label="Right Control Point" name="right-control-point-field" />
+        <ui:Toggle label="Constant" name="constant-field" />
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,18 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/Curvify/Editor/Core/UI/USS/stylesheet_curvify_shared.uss?fileID=7433441132597879392&amp;guid=fb47dfecc3eb54091b2e3f7875bf33a7&amp;type=3#stylesheet_curvify_shared" />
+    <ui:VisualElement name="main" style="flex-grow: 1; position: absolute; left: 0; top: 0; right: 0; bottom: 0;">
+        <uie:Toolbar name="toolbar" focusable="true" style="height: 28px; padding-top: 1px; padding-bottom: 1px;">
+            <Curvify.Subsystem.GUIComponent.ToggleButton is-on="false" name="editor-toggle-button" style="width: 40px; padding-top: 2px; padding-bottom: 2px;">
+                <ui:VisualElement class="curvify-button-icon" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/Curvify/Editor/Core/Textures/tex_icon_edit.png?fileID=2800000&amp;guid=54cdfa1681da044d8a0c52fab5d100f2&amp;type=3#tex_icon_edit&apos;); -unity-background-scale-mode: scale-to-fit; flex-shrink: 1;" />
+            </Curvify.Subsystem.GUIComponent.ToggleButton>
+            <uie:ToolbarSpacer style="flex-grow: 1;" />
+            <Curvify.View.ApplyTargetSelectorView style="width: 120px;" />
+            <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="preset-list-button" style="width: 40px; padding-top: 2px; padding-bottom: 2px;">
+                <ui:VisualElement class="curvify-button-icon" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/Curvify/Editor/Core/Textures/tex_icon_folder.png?fileID=2800000&amp;guid=a4bb5055c24924850a41fdddd0a78aa8&amp;type=3#tex_icon_folder&apos;); -unity-background-scale-mode: scale-to-fit; flex-shrink: 1;" />
+            </ui:Button>
+        </uie:Toolbar>
+        <ui:VisualElement name="content" focusable="true" class="curvify-window-background" style="flex-grow: 1;">
+            <ui:VisualElement name="curve-list" style="flex-grow: 1;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

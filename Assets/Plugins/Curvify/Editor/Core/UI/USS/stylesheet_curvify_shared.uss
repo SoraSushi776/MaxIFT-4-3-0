@@ -1,0 +1,26 @@
+.curvify-transparent-button {
+    background-color: var(--unity-colors-window-background);
+}
+
+.curvify-transparent-button:hover {
+    background-color: var(--unity-colors-button-background-hover);
+}
+
+.curvify-transparent-button:focus {
+    background-color: var(--unity-colors-button-background-focus);
+}
+
+.curvify-transparent-button:active {
+    background-color: var(--unity-colors-button-background-hover_pressed);
+}
+
+.curvify-window-background {
+    background-color: var(--unity-colors-window-background);
+}
+
+.curvify-button--selected {
+    background-color: var(--unity-colors-button-background-pressed);
+}
+.curvify-button-icon {
+    -unity-background-image-tint-color: var(--unity-colors-button-text);
+}

@@ -1,0 +1,7 @@
+.curvify-control-point-button {
+    background-color: var(--unity-colors-input_field-background);
+    border-bottom-color: var(--unity-colors-input_field-border);
+    border-left-color: var(--unity-colors-input_field-border);
+    border-right-color: var(--unity-colors-input_field-border);
+    border-top-color: var(--unity-colors-input_field-border);
+}

@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:ScrollView focusable="true" style="flex-grow: 1;">
+        <uie:Toolbar name="user-title" style="height: 28px; border-top-width: 1px; border-bottom-color: rgba(35, 35, 35, 0.5); display: flex;">
+            <ui:Label tabindex="-1" text="User" parse-escape-sequences="true" display-tooltip-when-elided="true" style="flex-grow: 0; justify-content: center; align-self: center; margin-left: 4px; -unity-font-style: bold;" />
+            <uie:ToolbarSpacer style="flex-grow: 1;" />
+            <uie:ToolbarButton text="+" parse-escape-sequences="true" display-tooltip-when-elided="true" name="user-item-add-button" style="width: 30px; -unity-text-align: middle-center; font-size: 19px; -unity-font-style: bold; border-right-width: 0; border-left-width: 0; padding-top: 0;" />
+        </uie:Toolbar>
+        <ui:VisualElement name="user-items" style="flex-grow: 1;" />
+        <uie:Toolbar name="project-title" style="height: 28px; border-top-width: 1px; border-bottom-color: rgba(35, 35, 35, 0.5); display: flex;">
+            <ui:Label tabindex="-1" text="Project" parse-escape-sequences="true" display-tooltip-when-elided="true" style="flex-grow: 0; justify-content: center; align-self: center; margin-left: 4px; -unity-font-style: bold;" />
+            <uie:ToolbarSpacer style="flex-grow: 1;" />
+            <uie:ToolbarButton text="+" parse-escape-sequences="true" display-tooltip-when-elided="true" name="project-item-add-button" style="width: 30px; -unity-text-align: middle-center; font-size: 19px; -unity-font-style: bold; border-right-width: 0; border-left-width: 0; padding-top: 0;" />
+        </uie:Toolbar>
+        <ui:VisualElement name="project-items" style="flex-grow: 1;" />
+    </ui:ScrollView>
+</ui:UXML>

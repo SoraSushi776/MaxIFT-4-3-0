@@ -1,0 +1,3 @@
+.curvify-toggle-button--on {
+    background-color: var(--unity-colors-button-background-pressed);
+}

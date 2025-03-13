@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:ScrollView name="ScrollView" focusable="true" style="width: 100%; height: 100%;" />
+    <uie:Toolbar style="flex-direction: row;">
+        <uie:ToolbarSpacer style="flex-grow: 1;" />
+        <ui:Slider picking-mode="Ignore" value="60" high-value="100" name="scale-slider" low-value="30" style="width: 80px; margin-right: 15px;" />
+    </uie:Toolbar>
+</ui:UXML>

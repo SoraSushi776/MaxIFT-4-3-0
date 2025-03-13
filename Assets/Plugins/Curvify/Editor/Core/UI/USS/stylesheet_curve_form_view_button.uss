@@ -1,0 +1,15 @@
+.curvify-curve-form-button {
+    background-color: var(--unity-colors-window-background);
+}
+
+.curvify-curve-form-button:hover {
+    background-color: var(--unity-colors-button-background-hover);
+}
+
+.curvify-curve-form-button:focus {
+    background-color: var(--unity-colors-button-background-focus);
+}
+
+.curvify-curve-form-button:active {
+    background-color: var(--unity-colors-button-background-hover_pressed);
+}
