@@ -4,12 +4,10 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
-using Object = UnityEngine.Object;
 
 namespace DancingLineFanmade.Level
 {

@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace DancingLineFanmade.Level
 {
-    public class ObjectPool<T> where T : Object
+    public class ObjectPool<T> where T : Component
     {
         private Queue<T> pool = new Queue<T>();
         private int size = 0;
@@ -17,7 +16,7 @@ namespace DancingLineFanmade.Level
 
         public void DestoryAll()
         {
-            foreach (T t in pool) Object.Destroy(t.GameObject());
+            foreach (T t in pool) Object.Destroy(t.gameObject);
             pool.Clear();
         }
 
