@@ -75,7 +75,7 @@ namespace DancingLineFanmade.Trigger
         {
             if (type == SetType.ChangeDirection)
             {
-                LevelManager.DrawDirection(transform, 3);
+                LevelManager.DrawDirection(transform, 3, 1);
 
                 Gizmos.color = Color.white;
                 Gizmos.DrawWireCube(transform.position, Vector3.one);

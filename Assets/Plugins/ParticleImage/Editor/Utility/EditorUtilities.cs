@@ -23,6 +23,7 @@ namespace AssetKits.ParticleImage.Editor
                     // Create a custom game object
                     GameObject go = new GameObject("Particle Image");
                     ParticleImage pi = go.AddComponent<ParticleImage>();
+                    #pragma warning disable
                     pi.texture = AssetDatabase.GetBuiltinExtraResource<Texture2D>("Default-Particle.psd");
                     pi.canvasRect = canvas.GetComponent<RectTransform>();
                     if (menuCommand.context)

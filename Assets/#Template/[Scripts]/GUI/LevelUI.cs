@@ -3,12 +3,10 @@ using DG.Tweening;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using DancingLineFanmade.Trigger;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using JetBrains.Annotations;
 using AssetKits.ParticleImage;
 
 namespace DancingLineFanmade.UI
@@ -66,7 +64,8 @@ namespace DancingLineFanmade.UI
 
         private void Start() {
             var result = FindObjectOfType<CrownParticleSign>();
-            if(result == null){
+            if(result == null)
+            {
                 result = (Instantiate(Resources.Load("UIParticle/ParticleRenderCamera")) as GameObject).GetComponent<CrownParticleSign>();
             }
             system = result.particle;
@@ -110,7 +109,7 @@ namespace DancingLineFanmade.UI
                     crownParticlesImage[0].color = fade;
                     crownParticlesImage[1].color = fade;
                     crownParticlesImage[2].color = fade;
-                    system.Stop();
+                    PlayParticle();
 
                     crownInfill[0].DOFade(1f, 0.6f).SetEase(Ease.Linear);
                     (crownInfill[0].transform as RectTransform).anchoredPosition = new(-220, movementY);
@@ -119,7 +118,7 @@ namespace DancingLineFanmade.UI
                     crownInfill[0].transform.DOScale(Vector3.one, 0.6f).SetEase(Ease.InCubic).OnComplete(() =>
                     {
                         crownParticlesImage[0].color = Color.white;
-                        system.Play();
+                        PlayParticle();
                         if (crownCount > 0) AudioSource.PlayClipAtPoint(crownSount[crownCount - 1], Camera.main.transform.position, 1f);
                         if (crownCount > 1)
                         {
@@ -130,8 +129,7 @@ namespace DancingLineFanmade.UI
                             {
                                 crownParticlesImage[0].color = fade;
                                 crownParticlesImage[1].color = Color.white;
-                                system.Stop();
-                                system.Play();
+                                PlayParticle();
                                 if (crownCount > 2)
                                 {
                                     crownInfill[2].DOFade(1f, 0.6f).SetEase(Ease.Linear);
@@ -141,8 +139,7 @@ namespace DancingLineFanmade.UI
                                     crownInfill[2].transform.DOScale(Vector3.one, 0.6f).SetEase(Ease.InCubic).OnComplete(()=>{
                                         crownParticlesImage[1].color = fade;
                                         crownParticlesImage[2].color = Color.white;
-                                        system.Stop();
-                                        system.Play();
+                                        PlayParticle();
                                     });
                                 }
                             });
@@ -160,6 +157,15 @@ namespace DancingLineFanmade.UI
                 foreach (CanvasGroup c in reviveAlpha) c.DOFade(1f, 0.4f).SetEase(Ease.Linear);
                 barFillRevive.sizeDelta = new Vector2(10f, 18f) + new Vector2(480f * percent, 0f);
                 percentageRevive.text = ((int)(percent * 100f)).ToString() + "%";
+            }
+        
+            void PlayParticle() {
+                if (this == null)
+                {
+                    system.Stop();
+                    system.Play();
+                }
+                
             }
         }
 

@@ -11,59 +11,62 @@ namespace DancingLineFanmade.Level
         private Transform selfTransform;
 
         public static CameraFollower Instance { get; private set; }
-        public Camera thisCamera { get; set; }
-        [HideInInspector] public Transform follower;
 
-        [SerializeField] private Transform target;
-        [SerializeField] internal bool follow = true;
-        [SerializeField] internal bool smooth = true;
+        public Transform target;
+        public Transform rotator;
+        public Transform scale;
+        public Vector3 defaultOffset = Vector3.zero;
+        public Vector3 defaultRotation = new(60f, 45f, 0f);
+        public Vector3 defaultScale = Vector3.one;
+        public bool follow = true;
+        public bool smooth = true;
 
-        // 转换坐标和跟随的速度
-        public Vector3 followSpeed = new(1.2f, 3f, 6f);
-        private readonly Quaternion vectorRotation = Quaternion.Euler(0, -45, 0);
+        public Camera FollowingCamera { get; set; }
+        private Player Player { get; set; }
+        private Tween OffsetTween { get; set; }
+        private Tween RotationTween { get; set; }
+        private Tween ScaleTween { get; set; }
+        private Tween ShakeTween { get; set; }
+        private Tween FovTween { get; set; }
+        private float ShakePower { get; set; }
+        private Quaternion Rotation { get; set; }
+        public Vector3 FollowSpeed = new(1.2f, 3f, 6f);
+
         private Vector3 Translation
         {
             get
             {
-                var targetPosition = vectorRotation * target.position;
-                var followerPosition = vectorRotation * follower.position;
-                return targetPosition - followerPosition;
+                var targetPosition = Rotation * target.position;
+                var selfPosition = Rotation * selfTransform.position;
+                return targetPosition - selfPosition;
             }
         }
-        private Transform origin;
-        public bool reverseSpeed;
 
-        internal Transform rotator;
-        internal Transform scale;
+        private Transform Origin { get; set; }
 
-        private Tween offset;
-        private Tween rotation;
-        private Tween zoom;
-        private Tween shake;
-        private Tween fov;
+        Tween _followspeed;
 
-        private float shakePower { get; set; }
-
-        private void Awake()
+        public void SetFollowSpeed(Vector3 target, float duration, Ease ease)
         {
-            Instance = this;
-            selfTransform = transform;
+            _followspeed?.Kill(false);
+            _followspeed = DOTween.To(()=> FollowSpeed, a => FollowSpeed = a, target, duration);
+            _followspeed.SetEase(ease);
         }
 
         private void Start()
         {
-            follower = transform;
-            rotator = selfTransform.Find("Rotator");
-            scale = rotator.Find("Scale");
-            thisCamera = scale.Find("Camera").GetComponent<Camera>();
-
-            // 创建一个新的坐标原点
-            origin = new GameObject("CameraTranslateOrigin")
+            Instance = this;
+            selfTransform = transform;
+            Player = Player.Instance;
+            Rotation = Quaternion.Euler(GetRotatingVector(Player.firstDirection, Player.secondDirection, false));
+            FollowingCamera = Player.sceneCamera;
+            SetDefaultTransform();
+            Origin = new GameObject("CameraMovementOrigin")
             {
                 transform =
                 {
                     position = Vector3.zero,
-                    rotation = Quaternion.Euler(0, 45, 0),
+                    rotation = Quaternion.Euler(GetRotatingVector(Player.firstDirection, Player.secondDirection, true)),
                     localScale = Vector3.one
                 }
             }.transform;
@@ -71,96 +74,103 @@ namespace DancingLineFanmade.Level
 
         private void Update()
         {
-            /* 
-            Vector3 translation = target.position - selfTransform.position;
+            var translation = new Vector3(Translation.x * Time.smoothDeltaTime * FollowSpeed.x,
+                Translation.y * Time.smoothDeltaTime * FollowSpeed.y,
+                Translation.z * Time.smoothDeltaTime * FollowSpeed.z);
             if (LevelManager.GameState == GameStatus.Playing && follow)
-            {
-                if (smooth) selfTransform.Translate(new Vector3(translation.x * followSpeed.x * Time.deltaTime, translation.y * followSpeed.y * Time.deltaTime, translation.z * followSpeed.z * Time.deltaTime));
-                else selfTransform.position = target.position;
-            }
-            */
-
-            // 新的跟随代码
-            var result = reverseSpeed
-                ? new Vector3(Translation.x * Time.smoothDeltaTime * followSpeed.z,
-                    Translation.y * Time.smoothDeltaTime * followSpeed.y,
-                    Translation.z * Time.smoothDeltaTime * followSpeed.x)
-                : new Vector3(Translation.x * Time.smoothDeltaTime * followSpeed.x,
-                    Translation.y * Time.smoothDeltaTime * followSpeed.y,
-                    Translation.z * Time.smoothDeltaTime * followSpeed.z);
-            if (LevelManager.GameState == GameStatus.Playing && follow)
-            {
-                if (smooth)
-                    follower.Translate(result, origin);
-                else follower.Translate(result);
-            }
+                selfTransform.Translate(smooth ? translation : Translation, Origin);
         }
 
-        internal void Trigger(bool addOffset, Vector3 offset, Vector3 rotation, Vector3 scale, float fov, float duration, Ease ease, RotateMode mode, UnityEvent callback)
+        public void Trigger(Vector3 n_offset, Vector3 n_rotation, Vector3 n_scale, float n_fov, float duration,
+            Ease ease, RotateMode mode, UnityEvent callback, bool use, AnimationCurve curve)
         {
-            SetOffset(addOffset, offset, duration, ease);
-            SetRotation(rotation, duration, mode, ease);
-            SetScale(scale, duration, ease);
-            SetFov(fov, duration, ease);
-            this.rotation.OnComplete(() => callback.Invoke());
+            SetOffset(n_offset, duration, ease, use, curve);
+            SetRotation(n_rotation, duration, mode, ease, use, curve);
+            SetScale(n_scale, duration, ease, use, curve);
+            SetFov(n_fov, duration, ease, use, curve);
+            RotationTween.OnComplete(callback.Invoke);
         }
 
-        internal void KillAll()
+        public void KillAll()
         {
-            offset?.Kill();
-            rotation?.Kill();
-            zoom?.Kill();
-            shake?.Kill();
-            fov?.Kill();
+            OffsetTween?.Kill();
+            RotationTween?.Kill();
+            ScaleTween?.Kill();
+            ShakeTween?.Kill();
+            FovTween?.Kill();
         }
 
-        private void SetOffset(bool addOffset, Vector3 offset, float duration, Ease ease = Ease.InOutSine)
+        private void SetOffset(Vector3 n_offset, float duration, Ease ease, bool use, AnimationCurve curve)
         {
-            if (this.offset != null)
+            if (OffsetTween != null)
             {
-                this.offset.Kill();
-                this.offset = null;
+                OffsetTween.Kill();
+                OffsetTween = null;
             }
-            if (addOffset) this.offset = rotator.DOLocalMove(rotator.transform.localPosition + offset, duration).SetEase(ease);
-            else this.offset = rotator.DOLocalMove(offset, duration).SetEase(ease);
+
+            OffsetTween = !use
+                ? rotator.DOLocalMove(n_offset, duration).SetEase(ease)
+                : rotator.DOLocalMove(n_offset, duration).SetEase(curve);
         }
 
-        private void SetRotation(Vector3 rotation, float duration, RotateMode mode, Ease ease = Ease.InOutSine)
+        private void SetRotation(Vector3 n_rotation, float duration, RotateMode mode, Ease ease, bool use,
+            AnimationCurve curve)
         {
-            if (this.rotation != null)
+            if (RotationTween != null)
             {
-                this.rotation.Kill();
-                this.rotation = null;
+                RotationTween.Kill();
+                RotationTween = null;
             }
-            this.rotation = rotator.DOLocalRotate(rotation, duration, mode).SetEase(ease);
+
+            RotationTween = !use
+                ? rotator.DOLocalRotate(n_rotation, duration, mode).SetEase(ease)
+                : rotator.DOLocalRotate(n_rotation, duration, mode).SetEase(curve);
         }
 
-        private void SetScale(Vector3 scale, float duration, Ease ease = Ease.InOutSine)
+        private void SetScale(Vector3 n_scale, float duration, Ease ease, bool use, AnimationCurve curve)
         {
-            if (zoom != null)
+            if (ScaleTween != null)
             {
-                zoom.Kill();
-                zoom = null;
+                ScaleTween.Kill();
+                ScaleTween = null;
             }
-            zoom = this.scale.DOScale(scale, duration).SetEase(ease);
+
+            ScaleTween = !use
+                ? scale.DOScale(n_scale, duration).SetEase(ease)
+                : scale.DOScale(n_scale, duration).SetEase(curve);
+        }
+
+        private void SetFov(float n_fov, float duration, Ease ease, bool use, AnimationCurve curve)
+        {
+            if (FovTween != null)
+            {
+                FovTween.Kill();
+                FovTween = null;
+            }
+
+            FovTween = !use
+                ? FollowingCamera.DOFieldOfView(n_fov, duration).SetEase(ease)
+                : FollowingCamera.DOFieldOfView(n_fov, duration).SetEase(curve);
         }
 
         public void DoShake(float power = 1f, float duration = 3f)
         {
-            if (shake != null)
+            if (ShakeTween != null)
             {
-                shake.Kill();
-                shake = null;
+                ShakeTween.Kill();
+                ShakeTween = null;
             }
-            shake = DOTween.To(() => shakePower, x => shakePower = x, power, duration * 0.5f).SetEase(Ease.Linear);
-            shake.SetLoops(2, LoopType.Yoyo);
-            shake.OnUpdate(new TweenCallback(ShakeUpdate));
-            shake.OnComplete(new TweenCallback(ShakeFinished));
+
+            ShakeTween = DOTween.To(() => ShakePower, x => ShakePower = x, power, duration * 0.5f).SetEase(Ease.Linear);
+            ShakeTween.SetLoops(2, LoopType.Yoyo);
+            ShakeTween.OnUpdate(ShakeUpdate);
+            ShakeTween.OnComplete(ShakeFinished);
         }
 
         private void ShakeUpdate()
         {
-            scale.transform.localPosition = new Vector3(UnityEngine.Random.value * shakePower, UnityEngine.Random.value * shakePower, UnityEngine.Random.value * shakePower);
+            scale.transform.localPosition = new Vector3(UnityEngine.Random.value * ShakePower,
+                UnityEngine.Random.value * ShakePower, UnityEngine.Random.value * ShakePower);
         }
 
         private void ShakeFinished()
@@ -168,15 +178,35 @@ namespace DancingLineFanmade.Level
             scale.transform.localPosition = Vector3.zero;
         }
 
-        private void SetFov(float fov, float duration, Ease ease = Ease.InOutSine)
+        private void SetDefaultTransform()
         {
-            if (this.fov != null)
-            {
-                this.fov.Kill();
-                this.fov = null;
-            }
-            this.fov = thisCamera.DOFieldOfView(fov, duration).SetEase(ease);
+            rotator.localPosition = defaultOffset;
+            rotator.eulerAngles = defaultRotation - new Vector3(60f, 0f, 0f);
+            scale.localScale = defaultScale;
         }
+
+        private static Vector3 GetRotatingVector(Vector3 first, Vector3 second, bool positive)
+        {
+            return positive
+                ? 0.5f * (first.Convert() + second.Convert())
+                : -0.5f * (first.Convert() + second.Convert());
+        }
+
+        public void SetRotatingOrigin(Vector3 first, Vector3 second)
+        {
+            var eulerRotation = Quaternion.Euler(-0.5f * (first.Convert() + second.Convert()));
+            var eulerOrigin = Quaternion.Euler(0.5f * (first.Convert() + second.Convert()));
+            Rotation = eulerRotation;
+            Origin.rotation = eulerOrigin;
+        }
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (!Application.isPlaying)
+                SetDefaultTransform();
+        }
+#endif
     }
 
     [Serializable]
@@ -188,27 +218,29 @@ namespace DancingLineFanmade.Level
         public float fov;
         public bool follow;
 
-        internal CameraSettings GetCamera()
+        public CameraSettings GetCamera()
         {
-            CameraSettings settings = new CameraSettings();
-            CameraFollower follower = CameraFollower.Instance;
+            var settings = new CameraSettings();
+            var follower = CameraFollower.Instance;
             settings.offset = follower.rotator.localPosition;
-            settings.rotation = follower.rotator.localEulerAngles;
+            settings.rotation = follower.rotator.localEulerAngles + new Vector3(60f, 0f, 0f);
             settings.scale = follower.scale.localScale;
-            settings.fov = follower.thisCamera.fieldOfView;
+            settings.fov = follower.FollowingCamera.fieldOfView;
             settings.follow = follower.follow;
             return settings;
         }
 
-        internal void SetCamera()
+        public void SetCamera(Vector3 first, Vector3 second)
         {
-            CameraFollower follower = CameraFollower.Instance;
+            var follower = CameraFollower.Instance;
             follower.rotator.localPosition = offset;
-            follower.rotator.localEulerAngles = rotation;
+            follower.rotator.localEulerAngles = rotation - new Vector3(60f, 0f, 0f);
             follower.scale.localScale = scale;
             follower.scale.localPosition = Vector3.zero;
-            follower.thisCamera.fieldOfView = fov;
+            follower.FollowingCamera.fieldOfView = fov;
             follower.follow = follow;
+
+            CameraFollower.Instance.SetRotatingOrigin(first, second);
         }
     }
 }

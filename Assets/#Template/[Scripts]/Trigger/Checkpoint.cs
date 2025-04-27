@@ -135,7 +135,7 @@ namespace DancingLineFanmade.Trigger
 
         private void ResetScene()
         {
-            if (CameraFollower.Instance) camera.SetCamera();
+            if (CameraFollower.Instance) camera.SetCamera(playerFirstDirection, playerSecondDirection);
             fog.SetFog(player.sceneCamera);
             light.SetLight(player.sceneLight);
             ambient.SetAmbient();

@@ -17,14 +17,13 @@ namespace DancingLineFanmade.Trigger
         public ParticleSystem crownAura;
 
         public SpriteRenderer crownRenderer;
+        public float JumpPower = 3f;
 
         private const float auraTweenDuration = 1.25f;
 
         private MeshRenderer crownMeshRenderer;
 
         private Tween crownTween;
-
-        private readonly List<Tween> auraTweens = new();
 
         private bool taken;
 
@@ -74,12 +73,12 @@ namespace DancingLineFanmade.Trigger
         [SerializeField, HideIf(nameof(AutoRecord))]
         private float GameTime;
 
-        private int trackProgress;
-
         [SerializeField, HideIf(nameof(AutoRecord))]
         private float playerSpeed;
 
-        public UnityEvent eventWeNeedInvokeWhenJumpToHere;
+        private int trackProgress;
+
+        
 
         private Vector3 sceneGravity;
         private Vector3 playerFirstDirection;
@@ -90,6 +89,7 @@ namespace DancingLineFanmade.Trigger
         private List<SetActive> actives = new List<SetActive>();
         private List<PlayAnimator> animators = new List<PlayAnimator>();
         private List<FakePlayer> fakes = new List<FakePlayer>();
+        Tween _jump;
 
         private void Start()
         {
@@ -171,7 +171,7 @@ namespace DancingLineFanmade.Trigger
             crownAura.transform.position = crownObject.transform.position;
             crownAura.Play();
             var pos = crownRenderer.transform.position;
-            auraTweens.Add(crownAura.transform.DOMoveX(pos.x, auraTweenDuration));
+            /*auraTweens.Add(crownAura.transform.DOMoveX(pos.x, auraTweenDuration));
             auraTweens[^1].SetEase(Ease.InOutSine);
             auraTweens.Add(crownAura.transform.DOMoveZ(pos.z, auraTweenDuration));
             auraTweens[^1].SetEase(Ease.InOutSine);
@@ -180,10 +180,10 @@ namespace DancingLineFanmade.Trigger
             auraTweens[^1].SetEase(Ease.InSine);
             Tweener tween = crownAura.transform.DOMoveY(pos.y, auraTweenDuration / 2f);
             tween.SetEase(Ease.OutSine);
-            tween.SetDelay(auraTweenDuration / 2f);
-            tween.OnStart(ShowSpirit);
-            auraTweens.Add(tween);
-            auraTweens[0].OnComplete(ClearAuraTweens);
+            tween.SetDelay(auraTweenDuration / 2f);*/
+            _jump = crownAura.transform.DOJump(crownRenderer.transform.position, JumpPower, 1, auraTweenDuration);
+            _jump.OnStart(ShowSpirit);
+            _jump.OnComplete(ClearAuraTweens);
             crownMeshRenderer.enabled = false;
         }
 
@@ -235,8 +235,7 @@ namespace DancingLineFanmade.Trigger
 
         private void ClearAuraTweens()
         {
-            foreach (var VARIABLE in auraTweens) VARIABLE.Kill();
-            auraTweens.Clear();
+            _jump?.Kill(true);
         }
 
         internal void Revival()
@@ -260,7 +259,7 @@ namespace DancingLineFanmade.Trigger
 
         private void ResetScene()
         {
-            if (CameraFollower.Instance) camera.SetCamera();
+            if (CameraFollower.Instance) camera.SetCamera(playerFirstDirection, playerSecondDirection);
             fog.SetFog(player.sceneCamera);
             light.SetLight(player.sceneLight);
             ambient.SetAmbient();
@@ -296,7 +295,7 @@ namespace DancingLineFanmade.Trigger
             onRevive.Invoke();
         }
 
-        public void JumpToHere()
+        /*public void JumpToHere()
         {
             if (LevelManager.GameState == GameStatus.Waiting)
             {
@@ -316,6 +315,6 @@ namespace DancingLineFanmade.Trigger
                         player.allowTurn = true;
                     });
             }
-        }
+        }*/
     }
 }

@@ -455,7 +455,7 @@ namespace DancingLineFanmade.Level
 
         private void OnDrawGizmos()
         {
-            if (drawDirection) LevelManager.DrawDirection(transform, 4);
+            if (drawDirection) LevelManager.DrawDirection(transform, 4, 1);
         }
 
         [Button("Get Start Position", ButtonSizes.Large)]

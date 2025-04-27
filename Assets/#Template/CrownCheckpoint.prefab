@@ -9717,6 +9717,7 @@ GameObject:
   - component: {fileID: 7624165497488238419}
   - component: {fileID: 7624165497488238429}
   - component: {fileID: 7781688429451391512}
+  - component: {fileID: 1107931092772630434}
   m_Layer: 0
   m_Name: CrownTrigger
   m_TagString: Untagged
@@ -9775,6 +9776,7 @@ MonoBehaviour:
   crownObject: {fileID: 8493128393788387721}
   crownAura: {fileID: 6756496787503259910}
   crownRenderer: {fileID: 7624165498405866259}
+  JumpPower: 3
   direction: 0
   camera:
     offset: {x: 0, y: 0, z: 0}
@@ -9813,10 +9815,20 @@ MonoBehaviour:
   AutoRecord: 1
   GameTime: 0
   playerSpeed: 12
-  eventWeNeedInvokeWhenJumpToHere:
-    m_PersistentCalls:
-      m_Calls: []
   revivePosition: {fileID: 9193384916318163942}
+--- !u!114 &1107931092772630434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7624165497488238431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cf5d74f258b639429531243f95144a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0.91665447, g: 1, b: 0, a: 0.6}
 --- !u!1 &7624165497753955748
 GameObject:
   m_ObjectHideFlags: 0

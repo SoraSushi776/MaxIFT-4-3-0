@@ -23,7 +23,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2183286171264338556}
-  m_LocalRotation: {x: 0.41943246, y: 0.34097347, z: -0.1737346, w: 0.82318276}
+  m_LocalRotation: {x: 0.23911761, y: 0.36964384, z: -0.09904577, w: 0.8923991}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -162,9 +162,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  followSpeed: {x: 1.5, y: 1.5, z: 1.5}
+  rotator: {fileID: 2183286171264338531}
+  scale: {fileID: 2183286172861603004}
+  defaultOffset: {x: 0, y: 0, z: 0}
+  defaultRotation: {x: 90, y: 45, z: 0}
+  defaultScale: {x: 1, y: 1, z: 1}
   follow: 1
   smooth: 1
+  FollowSpeed: {x: 1.2, y: 3, z: 6}
 --- !u!1 &2183286172861603005
 GameObject:
   m_ObjectHideFlags: 0

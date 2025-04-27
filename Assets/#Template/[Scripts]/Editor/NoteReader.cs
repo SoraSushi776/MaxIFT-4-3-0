@@ -46,12 +46,12 @@ public class NoteReader : EditorWindow
         //铺路选项
         makeRoad = EditorGUILayout.BeginToggleGroup("Make Road", makeRoad);
         roadWidth = EditorGUILayout.FloatField("Road Width", roadWidth);
-        road = (GameObject)EditorGUILayout.ObjectField("Road", road, typeof(GameObject));
+        road = (GameObject)EditorGUILayout.ObjectField("Road", road, typeof(GameObject), true);
         EditorGUILayout.EndToggleGroup();
 
         //自动选项
         autoPlay = EditorGUILayout.BeginToggleGroup("Auto Play", autoPlay);
-        autoPlayTrigger = (GameObject)EditorGUILayout.ObjectField("Trigger", autoPlayTrigger, typeof(GameObject));
+        autoPlayTrigger = (GameObject)EditorGUILayout.ObjectField("Trigger", autoPlayTrigger, typeof(GameObject), true);
         EditorGUILayout.EndToggleGroup();
 
         //空

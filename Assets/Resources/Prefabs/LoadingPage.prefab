@@ -132,6 +132,7 @@ MonoBehaviour:
   loadingText: {fileID: 3056692567671391729}
   background: {fileID: 3056692566473204427}
   loadingImage: {fileID: 3056692566155393461}
+  canvasGroup: {fileID: 3056692565769861261}
 --- !u!1 &3056692566155393463
 GameObject:
   m_ObjectHideFlags: 0

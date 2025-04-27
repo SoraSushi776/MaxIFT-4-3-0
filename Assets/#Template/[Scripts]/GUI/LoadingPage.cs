@@ -15,13 +15,14 @@ namespace DancingLineFanmade.UI
         [SerializeField] private Image background;
         [SerializeField] private Image loadingImage;
 
-        private CanvasGroup canvasGroup;
+        [SerializeField] private CanvasGroup canvasGroup;
         private AsyncOperation operation = null;
+        Tween _tween;
 
         private void Awake()
         {
             Instance = this;
-            canvasGroup = GetComponent<CanvasGroup>();
+            _tween?.Kill();
         }
 
         private void Start()
@@ -31,11 +32,14 @@ namespace DancingLineFanmade.UI
 
         public Tween Fade(float alpha, float duration, Ease ease = Ease.Linear)
         {
-            return canvasGroup.DOFade(alpha, duration).SetEase(ease);
+            _tween?.Kill();
+            _tween = canvasGroup.DOFade(alpha, duration).SetEase(ease);
+            return _tween;
         }
 
         public void Load(string sceneName)
         {
+
             Color backgroundColor = Player.Instance.sceneCamera.backgroundColor;
 
             background.color = backgroundColor;
@@ -47,6 +51,11 @@ namespace DancingLineFanmade.UI
                 operation = SceneManager.LoadSceneAsync(sceneName);
                 if (operation.isDone) operation = null;
             });
+        }
+
+        private void OnDestroy()
+        {
+            _tween?.Kill();
         }
     }
 }

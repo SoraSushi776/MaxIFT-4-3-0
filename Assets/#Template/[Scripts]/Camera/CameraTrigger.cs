@@ -11,11 +11,10 @@ namespace DancingLineFanmade.Trigger
         private CameraFollower follower;
 
         [SerializeField] private UnityEvent onFinished = new UnityEvent();
-        [SerializeField] private bool addOffset = false;
         [SerializeField] private Vector3 offset = Vector3.zero;
-        [SerializeField] private Vector3 rotation = new Vector3(54f, 45f, 0f);
+        [SerializeField] private Vector3 rotation = new Vector3(90f, 45f, 0f);
         [SerializeField] private Vector3 scale = Vector3.one;
-        [SerializeField, Range(0f, 179f)] private float fieldOfView = 80f;
+        [SerializeField, Range(0f, 179f)] private float fieldOfView = 60f;
         [SerializeField] private bool follow = true;
         [SerializeField, MinValue(0f)] private float duration = 2f;
         [SerializeField] private Ease ease = Ease.InOutSine;
@@ -32,7 +31,7 @@ namespace DancingLineFanmade.Trigger
             if (other.CompareTag("Player") && canBeTriggered)
             {
                 follower.follow = follow;
-                follower.Trigger(addOffset, offset, rotation, scale, fieldOfView, duration, ease, mode, onFinished);
+                follower.Trigger(offset, rotation, scale, fieldOfView, duration, ease, mode, onFinished, false, null);
             }
         }
 
@@ -41,7 +40,7 @@ namespace DancingLineFanmade.Trigger
             if (!canBeTriggered)
             {
                 follower.follow = follow;
-                follower.Trigger(addOffset, offset, rotation, scale, fieldOfView, duration, ease, mode, onFinished);
+                follower.Trigger(offset, rotation, scale, fieldOfView, duration, ease, mode, onFinished, false, null);
             }
         }
     }

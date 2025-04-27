@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 8032986928119790792}
   - component: {fileID: 1124751191757954650}
   - component: {fileID: 8032986928119790793}
+  - component: {fileID: 326542363878379468}
   m_Layer: 0
   m_Name: CheckpointTrigger
   m_TagString: Untagged
@@ -100,6 +101,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bc18c0e2d0a20d418611854562c7fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &326542363878379468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555619824945676824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cf5d74f258b639429531243f95144a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 0, b: 0.04943371, a: 0.6}
 --- !u!1 &839717366704941577
 GameObject:
   m_ObjectHideFlags: 0
