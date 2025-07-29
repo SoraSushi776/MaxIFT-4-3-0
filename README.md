@@ -1,3 +1,5 @@
+# 请注意，本仓库已接近停止支持，请转到 [XGames-Studio/DLMTP-Template](https://github.com/XGames-Studio/DLMTP-Template) 查看更新的模板
+
 <p align="center">
     <font size=5>
         <b>
