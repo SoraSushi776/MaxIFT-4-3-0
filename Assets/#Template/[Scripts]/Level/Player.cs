@@ -15,9 +15,10 @@ namespace DancingLineFanmade.Level
     public class Player : MonoBehaviour
     {
         private Transform selfTransform;
+        public static Rigidbody characterRigidbody;
 
         public static Player Instance { get; private set; }
-        public static Rigidbody Rigidbody { get; private set; }
+
 
         private GameObject tailPrefab;
         private GameObject cubesPrefab;
@@ -33,6 +34,7 @@ namespace DancingLineFanmade.Level
         public Camera sceneCamera;
         public Light sceneLight;
         public Material characterMaterial;
+
         public Vector3 startPosition = Vector3.zero;
         public Vector3 firstDirection = new Vector3(0, 90, 0);
         public Vector3 secondDirection = Vector3.zero;
@@ -119,7 +121,7 @@ namespace DancingLineFanmade.Level
             }
             DOTween.Clear();
             Instance = this;
-            Rigidbody = GetComponent<Rigidbody>();
+            characterRigidbody = GetComponent<Rigidbody>();
             loading = false;
             Checkpoints = new List<Checkpoint>();
             Crowns = new List<Crown>();

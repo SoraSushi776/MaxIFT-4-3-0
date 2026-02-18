@@ -33,6 +33,7 @@ namespace DancingLineFanmade.UI
         public Tween Fade(float alpha, float duration, Ease ease = Ease.Linear)
         {
             _tween?.Kill();
+            if (canvasGroup == null) return null;
             _tween = canvasGroup.DOFade(alpha, duration).SetEase(ease);
             return _tween;
         }
@@ -46,7 +47,7 @@ namespace DancingLineFanmade.UI
             loadingText.color = LevelManager.GetColorByContent(backgroundColor);
             loadingImage.color = LevelManager.GetColorByContent(backgroundColor);
 
-            Fade(1f, 0.4f).OnComplete(() =>
+            Fade(1f, 0.4f)?.OnComplete(() =>
             {
                 operation = SceneManager.LoadSceneAsync(sceneName);
                 if (operation.isDone) operation = null;

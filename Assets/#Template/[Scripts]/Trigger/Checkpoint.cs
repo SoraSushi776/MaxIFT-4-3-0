@@ -122,13 +122,13 @@ namespace DancingLineFanmade.Trigger
                     ResetScene();
                     LevelManager.revivePlayer.Invoke();
                     LevelManager.DestroyRemain();
-                    Player.Rigidbody.isKinematic = true;
+                    Player.characterRigidbody.isKinematic = true;
                     if (!usedRevive) Player.Instance.CrownCount--;
                     usedRevive = true;
                 },
                 () =>
                 {
-                    Player.Rigidbody.isKinematic = false;
+                    Player.characterRigidbody.isKinematic = false;
                     player.allowTurn = true;
                 });
         }

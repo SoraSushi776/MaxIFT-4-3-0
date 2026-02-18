@@ -53,9 +53,13 @@ namespace DancingLineFanmade.Level
             _followspeed.SetEase(ease);
         }
 
-        private void Start()
+        private void Awake()
         {
             Instance = this;
+        }
+
+        private void Start()
+        {
             selfTransform = transform;
             Player = Player.Instance;
             Rotation = Quaternion.Euler(GetRotatingVector(Player.firstDirection, Player.secondDirection, false));

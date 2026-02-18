@@ -7,7 +7,7 @@ namespace DancingLineFanmade.Trigger
     [DisallowMultipleComponent, RequireComponent(typeof(Collider))]
     public class Jump : MonoBehaviour
     {
-        [SerializeField, MinValue(0f)] internal float power = 500f;
+        [SerializeField, MinValue(0f)] internal float power = 10f;
         [SerializeField] private bool changeDirection = false;
 
         private void OnTriggerEnter(Collider other)
@@ -15,21 +15,16 @@ namespace DancingLineFanmade.Trigger
             if (other.CompareTag("Player"))
             {
                 if (changeDirection) Player.Instance.Turn();
-                Player.Rigidbody.AddForce(0, power * Player.Rigidbody.mass, 0, ForceMode.Force);
+                Player.characterRigidbody.AddForce(0, power * Player.characterRigidbody.mass, 0, ForceMode.Impulse);
                 Player.Instance.Events?.Invoke(7);
             }
         }
 
 #if UNITY_EDITOR
-        private void OnValidate()
-        {
-            if (GetComponent<JumpPredictor>() && GetComponent<LineRenderer>()) GetComponent<JumpPredictor>().Draw();
-        }
-
-        [Button("Add Predictor", ButtonSizes.Large)]
+        [Button("Add Predictor(Beta)", ButtonSizes.Large)]
         private void Add()
         {
-            gameObject.AddComponent<JumpPredictor>();
+            gameObject.AddComponent<TrailPredictor>();
         }
 #endif
     }
