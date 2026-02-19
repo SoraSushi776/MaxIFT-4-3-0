@@ -1,4 +1,5 @@
-# 请注意，本仓库已接近停止支持，请转到 [XGames-Studio/DLMTP-Template](https://github.com/XGames-Studio/DLMTP-Template) 查看更新的模板
+### 本仓库目前继续由[4QFlower](https://github.com/FSF0912)维护
+### 建议您到 [XGames-Studio/DLMTP-Template](https://github.com/XGames-Studio/DLMTP-Template) 查看更新的模板
 
 <p align="center">
     <font size=5>
@@ -13,7 +14,8 @@
 <p align="center">
     <b>
         仅作私用仓库存储，不传播，不发布<br>
-        基于 冰焰模板 4.3.0 修改
+        基于 冰焰模板 4.3.0 修改<br>
+        基于Unity2021.3.14f1
     </b>
 </p>
 
