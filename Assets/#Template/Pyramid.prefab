@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1159215691596356237}
   - component: {fileID: 1159215691596356238}
   - component: {fileID: 1159215691596356239}
+  - component: {fileID: 5505673367097957996}
   - component: {fileID: 1159215691596356236}
   m_Layer: 0
   m_Name: WaitingForWin
@@ -55,6 +56,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5505673367097957996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159215691596356226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cf5d74f258b639429531243f95144a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 0.52359486, b: 0, a: 0.6}
 --- !u!114 &1159215691596356236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,6 +95,7 @@ GameObject:
   - component: {fileID: 1159215691710683725}
   - component: {fileID: 1159215691710683726}
   - component: {fileID: 1159215691710683727}
+  - component: {fileID: 6266037182120449447}
   - component: {fileID: 1159215691710683724}
   m_Layer: 0
   m_Name: FinalTurn
@@ -125,6 +140,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6266037182120449447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159215691710683714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cf5d74f258b639429531243f95144a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 0.52359486, b: 0, a: 0.6}
 --- !u!114 &1159215691710683724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,6 +179,7 @@ GameObject:
   - component: {fileID: 1159215692809038641}
   - component: {fileID: 1159215692809038642}
   - component: {fileID: 1159215692809038643}
+  - component: {fileID: 3623094820600035977}
   - component: {fileID: 1159215692809038640}
   m_Layer: 0
   m_Name: StopPlayer
@@ -195,6 +224,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3623094820600035977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159215692809038646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cf5d74f258b639429531243f95144a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 0.52359486, b: 0, a: 0.6}
 --- !u!114 &1159215692809038640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -438,6 +480,7 @@ GameObject:
   - component: {fileID: 2020170202709921376}
   - component: {fileID: 8620615947805141053}
   - component: {fileID: 1676351388721842863}
+  - component: {fileID: 4100023155018814379}
   - component: {fileID: 8620615947805141052}
   m_Layer: 0
   m_Name: OpenPyramid
@@ -482,6 +525,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4100023155018814379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2264614356595300077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cf5d74f258b639429531243f95144a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 0.52359486, b: 0, a: 0.6}
 --- !u!114 &8620615947805141052
 MonoBehaviour:
   m_ObjectHideFlags: 0

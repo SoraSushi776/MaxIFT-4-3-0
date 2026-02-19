@@ -25,14 +25,7 @@ namespace DancingLineFanmade.Trigger
         [Space]
         [SerializeField] private bool canBeTriggered = true;
 
-        public PreviewCamera previewCamera;
-
-        private void Awake()
-        {
-            if (previewCamera != null) previewCamera.gameObject.SetActive(false);
-            var preview = transform.GetComponentInChildren<PreviewCamera>();
-            if (preview != null) preview.gameObject.SetActive(false);
-        }
+        [SerializeField, HideInInspector] private PreviewCamera previewCamera;
 
         private void Start()
         {

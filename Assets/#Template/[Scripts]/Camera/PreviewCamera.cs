@@ -2,12 +2,16 @@ using UnityEngine;
 
 namespace DancingLineFanmade.Trigger
 {
-    [ExecuteInEditMode]
     public class PreviewCamera : MonoBehaviour
     {
         public Transform rotator;
         public Transform scale;
         public Camera cam;
+
+        void Start()
+        {
+            this.gameObject.SetActive(false);
+        }
 
         public void UpdateCam(CameraTrigger target)
         {

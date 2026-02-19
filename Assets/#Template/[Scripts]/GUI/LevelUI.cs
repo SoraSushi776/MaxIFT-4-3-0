@@ -15,9 +15,9 @@ namespace DancingLineFanmade.UI
     {
         public readonly Color fade = new(1,1,1,0);
         public static LevelUI Instance { get; private set; }
-        ParticleSystem system;
 
         [Title("Normal")]
+        [SerializeField]private Image blurImage;
         [SerializeField] private Text title;
         [SerializeField] private Text percentage;
         [SerializeField] private Text block;
@@ -29,7 +29,6 @@ namespace DancingLineFanmade.UI
         [SerializeField] private List<Image> crownInfill = new List<Image>();
         [SerializeField] public Vector2 m_Scale;
         [SerializeField] private List<AudioClip> crownSount = new List<AudioClip>();
-        public List<RawImage> crownParticlesImage = new();
         [SerializeField] private List<Button> buttons = new List<Button>();
 
         [Title("Revive")]
@@ -60,15 +59,9 @@ namespace DancingLineFanmade.UI
 
             foreach (Button b in buttons) b.interactable = false;
             foreach (Button b in buttonsRevive) b.interactable = false;
-        }
 
-        private void Start() {
-            var result = FindObjectOfType<CrownParticleSign>();
-            if(result == null)
-            {
-                result = (Instantiate(Resources.Load("UIParticle/ParticleRenderCamera")) as GameObject).GetComponent<CrownParticleSign>();
-            }
-            system = result.particle;
+            blurImage.color = fade;
+            blurImage.gameObject.SetActive(false);
         }
 
         internal void NormalPage(float percent, int blockCount, int crownCount)
@@ -88,6 +81,9 @@ namespace DancingLineFanmade.UI
             Ease movementCurve = Ease.InCubic;
             float movementY = 120F;
             Cursor.visible = true;
+
+            blurImage.gameObject.SetActive(true);
+            blurImage.DOFade(1, 0.4f).SetEase(Ease.Linear);
             if (normal)
             {
                 moveUpPart.DOAnchorPos(Vector2.zero, 0.4f).SetEase(Ease.OutSine);
@@ -105,20 +101,12 @@ namespace DancingLineFanmade.UI
 
                 if (crownCount > 0)
                 {
-
-                    crownParticlesImage[0].color = fade;
-                    crownParticlesImage[1].color = fade;
-                    crownParticlesImage[2].color = fade;
-                    PlayParticle();
-
                     crownInfill[0].DOFade(1f, 0.6f).SetEase(Ease.Linear);
-                    (crownInfill[0].transform as RectTransform).anchoredPosition = new(-220, movementY);
+                    (crownInfill[0].transform as RectTransform).anchoredPosition = new(-250, movementY);
                     (crownInfill[0].transform as RectTransform).DOAnchorPos(new(-150,0),0.6f).SetEase(movementCurve);
                     
                     crownInfill[0].transform.DOScale(Vector3.one, 0.6f).SetEase(Ease.InCubic).OnComplete(() =>
                     {
-                        crownParticlesImage[0].color = Color.white;
-                        PlayParticle();
                         if (crownCount > 0) AudioSource.PlayClipAtPoint(crownSount[crownCount - 1], Camera.main.transform.position, 1f);
                         if (crownCount > 1)
                         {
@@ -127,19 +115,14 @@ namespace DancingLineFanmade.UI
                             (crownInfill[1].transform as RectTransform).DOAnchorPos(Vector2.zero, 0.6f).SetEase(movementCurve);
                             crownInfill[1].transform.DOScale(Vector3.one, 0.6f).SetEase(Ease.InCubic).OnComplete(() =>
                             {
-                                crownParticlesImage[0].color = fade;
-                                crownParticlesImage[1].color = Color.white;
-                                PlayParticle();
                                 if (crownCount > 2)
                                 {
                                     crownInfill[2].DOFade(1f, 0.6f).SetEase(Ease.Linear);
-                                    (crownInfill[2].transform as RectTransform).anchoredPosition = new(220, movementY);
+                                    (crownInfill[2].transform as RectTransform).anchoredPosition = new(250, movementY);
                                     (crownInfill[2].transform as RectTransform).DOAnchorPos(new(150,0),0.6f).SetEase(movementCurve);
                                  
                                     crownInfill[2].transform.DOScale(Vector3.one, 0.6f).SetEase(Ease.InCubic).OnComplete(()=>{
-                                        crownParticlesImage[1].color = fade;
-                                        crownParticlesImage[2].color = Color.white;
-                                        PlayParticle();
+
                                     });
                                 }
                             });
@@ -157,15 +140,6 @@ namespace DancingLineFanmade.UI
                 foreach (CanvasGroup c in reviveAlpha) c.DOFade(1f, 0.4f).SetEase(Ease.Linear);
                 barFillRevive.sizeDelta = new Vector2(10f, 18f) + new Vector2(480f * percent, 0f);
                 percentageRevive.text = ((int)(percent * 100f)).ToString() + "%";
-            }
-        
-            void PlayParticle() {
-                if (this == null)
-                {
-                    system.Stop();
-                    system.Play();
-                }
-                
             }
         }
 
@@ -199,6 +173,7 @@ namespace DancingLineFanmade.UI
             foreach (Button b in buttons) b.interactable = false;
             foreach (Button b in buttonsRevive) b.interactable = false;
 
+            blurImage.DOFade(0f, duration).SetEase(Ease.Linear).OnComplete(() => blurImage.gameObject.SetActive(false));
             hideScreenImage.color = new Color(color.r, color.g, color.b, 0f);
             hideScreenImage.DOFade(1f, duration).SetEase(Ease.Linear).OnComplete(() =>
             {

@@ -16,7 +16,7 @@ namespace DancingLineFanmade.Level
     [DisallowMultipleComponent]
     public class TrailPredictor : MonoBehaviour
     {
-        [InfoBox("如果脚本出现预测轨迹和实际轨迹对不上的情况，您可以尝试开始游戏再结束游戏")]
+        //[InfoBox("如果脚本出现预测轨迹和实际轨迹对不上的情况，您可以尝试开始游戏再结束游戏")]
         [Header("Settings")] 
         [SerializeField] private GravityAccessMode gravityAccessMode = GravityAccessMode.FromActivedLevelData;
         [SerializeField, ShowIf("gravityAccessMode", GravityAccessMode.Custom)] private Vector3 customGravity = Physics.gravity;
@@ -49,13 +49,20 @@ namespace DancingLineFanmade.Level
         private bool hasFirstHit;
         private bool isPlaying;
 
-        private Player _editModeGetPlayer => Player.Instance ?? FindObjectOfType<Player>();
+        private Player _editModeGetPlayer
+        {
+            get
+            {
+                if (Player.Instance != null) return Player.Instance;
+                return FindObjectOfType<Player>();
+            }
+        }
         private Rigidbody _editModeGetRigidbody
         {
             get
             { 
             if (_editModeGetPlayer == null) return null;
-                return _editModeGetPlayer?.GetComponent<Rigidbody>(); 
+                return _editModeGetPlayer.GetComponent<Rigidbody>(); 
             }
         }
 
