@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5698516200752898301}
   - component: {fileID: 5698516200752898298}
   m_Layer: 0
-  m_Name: GuidanceBox
+  m_Name: GuidelineTap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,9 +97,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75cda342a25f1e9499e4853f7b3fbe72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 5698516200752898301}
+  material: {fileID: 2100000, guid: 06c2db0c53f323d43a95e70ed624a4af, type: 2}
+  sprite: {fileID: 1718332546, guid: f4c072592fafc7248bbd1214ad116aaf, type: 3}
+  displayTime: -100
+  triggerTime: 0
   triggerDistance: 1
-  appearDistance: 600
-  canBeTriggered: 1
+  colorIndex: 0
   haveLine: 1
   triggered: 0
-  displayed: 0

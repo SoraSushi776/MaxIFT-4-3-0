@@ -120,6 +120,7 @@ namespace DancingLineFanmade.Level
                 return;
             }
             DOTween.Clear();
+            DOTween.SetTweensCapacity(2000, 1000);
             Instance = this;
             characterRigidbody = GetComponent<Rigidbody>();
             loading = false;
@@ -153,6 +154,7 @@ namespace DancingLineFanmade.Level
                 playedTimelines[a].Evaluate();
             }
 
+            SoundTrack = AudioManager.PlayTrack(levelData.soundTrack, 1f, false);
         }
 
         private void Start()
@@ -209,8 +211,7 @@ namespace DancingLineFanmade.Level
                         if (LevelManager.Clicked && !Falling)
                         {
                             LevelManager.GameState = GameStatus.Playing;
-                            if (!SoundTrack) SoundTrack = AudioManager.PlayTrack(levelData.soundTrack, 1f);
-                            else AudioManager.Play();
+                            AudioManager.Play();
                             foreach (Animator a in playedAnimators) a.speed = 1f;
                             foreach (PlayableDirector p in playedTimelines) p.Play();
                             foreach (PlayAnimator p in FindObjectsOfType<PlayAnimator>(true)) foreach (SingleAnimator s in p.animators) if (s.played) s.PlayAnimator();

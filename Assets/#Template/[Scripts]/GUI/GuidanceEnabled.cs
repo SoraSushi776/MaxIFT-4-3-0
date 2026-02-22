@@ -1,3 +1,4 @@
+using DancingLineFanmade.Guideline;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,14 +13,14 @@ namespace DancingLineFanmade.Guidance
         [SerializeField] private Sprite off;
         [SerializeField] private new bool enabled = false;
 
-        private GuidanceController controller;
+        private GuidelineManager controller;
 
         private void Start()
         {
-            controller = FindObjectOfType<GuidanceController>();
+            controller = FindObjectOfType<GuidelineManager>();
             SetGuidance(enabled);
 
-            if (!controller.boxHolder)
+            if (!controller.guidelineTapHolder)
             {
                 GetComponent<Button>().interactable = false;
                 foreach (Image i in GetComponentsInChildren<Image>())
@@ -43,12 +44,12 @@ namespace DancingLineFanmade.Guidance
             if (enabled)
             {
                 image.sprite = on;
-                if (controller.boxHolder) controller.boxHolder.gameObject.SetActive(true);
+                controller.SetUseGuideline(true);
             }
             else
             {
                 image.sprite = off;
-                if (controller.boxHolder) controller.boxHolder.gameObject.SetActive(false);
+                controller.SetUseGuideline(false);
             }
         }
     }

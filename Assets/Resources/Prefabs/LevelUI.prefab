@@ -7460,6 +7460,7 @@ GameObject:
   - component: {fileID: 709111479971946497}
   - component: {fileID: 99712413720853962}
   - component: {fileID: 4920912999351278061}
+  - component: {fileID: 5943608023494657219}
   m_Layer: 5
   m_Name: Blur
   m_TagString: Untagged
@@ -7525,6 +7526,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5943608023494657219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8486805955472486670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23748d1b9494d244f886bcbc98d5ff3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeType: 0
+  targetQualityIndex: 3
+  qualityTip: "\u5F53\u524D\u753B\u8D28 \u2265 SoHigh\uFF083\uFF09\u65F6 \u663E\u793A\u6B64\u7269\u4F53"
+  onQualityApplied:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8543232386115644695
 GameObject:
   m_ObjectHideFlags: 0
