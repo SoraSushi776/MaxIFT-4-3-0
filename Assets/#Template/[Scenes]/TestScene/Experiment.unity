@@ -196,6 +196,7 @@ GameObject:
   - component: {fileID: 53978594}
   - component: {fileID: 53978595}
   - component: {fileID: 53978593}
+  - component: {fileID: 53978596}
   m_Layer: 0
   m_Name: BaseObject
   m_TagString: Untagged
@@ -2427,6 +2428,23 @@ MonoBehaviour:
   - 281.032
   - 281.331
   - 281.481
+--- !u!114 &53978596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 53978591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1b6834c4f3a8dd42a60a5b34d3a03a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GuidelineTapHolder: {fileID: 497209436}
+  lineColor: {r: 0, g: 1, b: 0, a: 1}
+  boxColor: {r: 1, g: 0, b: 0, a: 1}
+  textColor: {r: 1, g: 0.9982565, b: 0, a: 1}
+  timeFormat: 0.00s
 --- !u!4 &59725833 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 66593924811911347, guid: 1eead436841b3ff4e92dcd55ce31ddae, type: 3}
